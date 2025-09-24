@@ -71,3 +71,22 @@
 **確認方法**:
 - `npm run build`
 
+## 2025-09-24 12:58 仕様バグ: daisyUIテーマがOS設定に依存
+
+**ブランチ**: main
+**カテゴリ**: 仕様バグ
+**修正前の症状**:
+- daisyUIのテーマがブラウザ/OSのダークモード設定に連動し、ユーザー環境によってライトテーマに切り替わる
+- READMEで求められる常時ダーク基調のデザインが維持されない
+
+**修正内容**:
+- src/index.css:2 - `@plugin "daisyui"` の設定に `themes: dark --default;` を追加しデフォルトテーマをdarkに固定
+- src/index.css:4-17 - `:root` と `[data-theme]` に `color-scheme: dark;` を指定しブラウザの自動ライト化を防止、ライト用の初期色指定を削除
+
+**修正前のコード → 修正後のコード**:
+- `@plugin "daisyui";` → `@plugin "daisyui" { themes: dark --default; }`
+- `:root { color-scheme: light dark; ... }` → `:root, [data-theme] { color-scheme: dark; ... }`
+
+**確認方法**:
+- `npm run build`
+
