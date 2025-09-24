@@ -2,15 +2,17 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ControlPanel } from './ControlPanel';
 
+const noop = () => undefined;
+
 describe('ControlPanel', () => {
   it('should show start button when game is idle', () => {
     render(
       <ControlPanel
         gameStatus="idle"
-        onStart={() => {}}
-        onPause={() => {}}
-        onResume={() => {}}
-        onReset={() => {}}
+        onStart={noop}
+        onPause={noop}
+        onResume={noop}
+        onReset={noop}
       />,
     );
 
@@ -21,10 +23,10 @@ describe('ControlPanel', () => {
     render(
       <ControlPanel
         gameStatus="playing"
-        onStart={() => {}}
-        onPause={() => {}}
-        onResume={() => {}}
-        onReset={() => {}}
+        onStart={noop}
+        onPause={noop}
+        onResume={noop}
+        onReset={noop}
       />,
     );
 
@@ -35,10 +37,10 @@ describe('ControlPanel', () => {
     render(
       <ControlPanel
         gameStatus="paused"
-        onStart={() => {}}
-        onPause={() => {}}
-        onResume={() => {}}
-        onReset={() => {}}
+        onStart={noop}
+        onPause={noop}
+        onResume={noop}
+        onReset={noop}
       />,
     );
 
@@ -49,10 +51,10 @@ describe('ControlPanel', () => {
     render(
       <ControlPanel
         gameStatus="gameOver"
-        onStart={() => {}}
-        onPause={() => {}}
-        onResume={() => {}}
-        onReset={() => {}}
+        onStart={noop}
+        onPause={noop}
+        onResume={noop}
+        onReset={noop}
       />,
     );
 
@@ -65,9 +67,9 @@ describe('ControlPanel', () => {
       <ControlPanel
         gameStatus="idle"
         onStart={onStart}
-        onPause={() => {}}
-        onResume={() => {}}
-        onReset={() => {}}
+        onPause={noop}
+        onResume={noop}
+        onReset={noop}
       />,
     );
 
@@ -80,10 +82,10 @@ describe('ControlPanel', () => {
     render(
       <ControlPanel
         gameStatus="playing"
-        onStart={() => {}}
+        onStart={noop}
         onPause={onPause}
-        onResume={() => {}}
-        onReset={() => {}}
+        onResume={noop}
+        onReset={noop}
       />,
     );
 
@@ -96,10 +98,10 @@ describe('ControlPanel', () => {
     render(
       <ControlPanel
         gameStatus="paused"
-        onStart={() => {}}
-        onPause={() => {}}
+        onStart={noop}
+        onPause={noop}
         onResume={onResume}
-        onReset={() => {}}
+        onReset={noop}
       />,
     );
 
@@ -112,9 +114,9 @@ describe('ControlPanel', () => {
     render(
       <ControlPanel
         gameStatus="playing"
-        onStart={() => {}}
-        onPause={() => {}}
-        onResume={() => {}}
+        onStart={noop}
+        onPause={noop}
+        onResume={noop}
         onReset={onReset}
       />,
     );
@@ -127,10 +129,10 @@ describe('ControlPanel', () => {
     const { rerender } = render(
       <ControlPanel
         gameStatus="playing"
-        onStart={() => {}}
-        onPause={() => {}}
-        onResume={() => {}}
-        onReset={() => {}}
+        onStart={noop}
+        onPause={noop}
+        onResume={noop}
+        onReset={noop}
       />,
     );
 
@@ -139,10 +141,10 @@ describe('ControlPanel', () => {
     rerender(
       <ControlPanel
         gameStatus="paused"
-        onStart={() => {}}
-        onPause={() => {}}
-        onResume={() => {}}
-        onReset={() => {}}
+        onStart={noop}
+        onPause={noop}
+        onResume={noop}
+        onReset={noop}
       />,
     );
 
@@ -153,10 +155,10 @@ describe('ControlPanel', () => {
     const { rerender } = render(
       <ControlPanel
         gameStatus="playing"
-        onStart={() => {}}
-        onPause={() => {}}
-        onResume={() => {}}
-        onReset={() => {}}
+        onStart={noop}
+        onPause={noop}
+        onResume={noop}
+        onReset={noop}
       />,
     );
 
@@ -165,10 +167,10 @@ describe('ControlPanel', () => {
     rerender(
       <ControlPanel
         gameStatus="paused"
-        onStart={() => {}}
-        onPause={() => {}}
-        onResume={() => {}}
-        onReset={() => {}}
+        onStart={noop}
+        onPause={noop}
+        onResume={noop}
+        onReset={noop}
       />,
     );
 
@@ -179,10 +181,10 @@ describe('ControlPanel', () => {
     render(
       <ControlPanel
         gameStatus="idle"
-        onStart={() => {}}
-        onPause={() => {}}
-        onResume={() => {}}
-        onReset={() => {}}
+        onStart={noop}
+        onPause={noop}
+        onResume={noop}
+        onReset={noop}
       />,
     );
 

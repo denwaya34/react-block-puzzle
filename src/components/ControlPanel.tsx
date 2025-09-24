@@ -52,6 +52,7 @@ export function ControlPanel({
       <div className={styles.buttons}>
         {gameStatus === 'idle' && (
           <button
+            type="button"
             className={`${styles.button} ${styles.primaryButton}`}
             onClick={onStart}
           >
@@ -61,6 +62,7 @@ export function ControlPanel({
 
         {gameStatus === 'playing' && (
           <button
+            type="button"
             className={`${styles.button} ${styles.pauseButton}`}
             onClick={onPause}
           >
@@ -70,6 +72,7 @@ export function ControlPanel({
 
         {gameStatus === 'paused' && (
           <button
+            type="button"
             className={`${styles.button} ${styles.primaryButton}`}
             onClick={onResume}
           >
@@ -79,6 +82,7 @@ export function ControlPanel({
 
         {gameStatus === 'gameOver' && (
           <button
+            type="button"
             className={`${styles.button} ${styles.primaryButton}`}
             onClick={onReset}
           >
@@ -88,6 +92,7 @@ export function ControlPanel({
 
         {(gameStatus === 'playing' || gameStatus === 'paused') && (
           <button
+            type="button"
             className={`${styles.button} ${styles.resetButton}`}
             onClick={onReset}
           >

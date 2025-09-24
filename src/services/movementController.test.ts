@@ -92,7 +92,7 @@ describe('MovementController', () => {
       );
 
       expect(kickedPosition).not.toBeNull();
-      expect(kickedPosition!.x).toBeLessThanOrEqual(position.x); // Should kick left or stay
+      expect(kickedPosition?.x).toBeLessThanOrEqual(position.x); // Should kick left or stay
     });
 
     it('should return null if no valid kick position found', () => {

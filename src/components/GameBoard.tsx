@@ -49,7 +49,7 @@ export const GameBoard = React.memo(function GameBoard({
 
   return (
     <div className={styles.gameBoard}>
-      {Array.from({ length: BOARD_HEIGHT }).map((_, row) => {
+        {Array.from({ length: BOARD_HEIGHT }).map((_, row) => {
         const isClearing = clearingLines.includes(row);
         return (
           <div

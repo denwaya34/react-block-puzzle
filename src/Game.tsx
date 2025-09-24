@@ -48,7 +48,7 @@ export function Game() {
   // Spawn new tetrimino
   const spawnNewTetrimino = useCallback(() => {
     const currentTetrimino
-      = gameState.nextTetrimino || generatorRef.current.next();
+      = gameState.nextTetrimino ?? generatorRef.current.next();
     const nextTetrimino = generatorRef.current.next();
     const position = getInitialPosition(currentTetrimino);
 
@@ -121,19 +121,15 @@ export function Game() {
 
   // Handle automatic drop
   const handleAutoDrop = useCallback(() => {
-    if (
-      gameState.status !== 'playing'
-      || !gameState.currentTetrimino
-      || !gameState.currentPosition
-      || clearingLines.length > 0 // Don't drop during line clear animation
-    ) {
+    const { status, currentTetrimino, currentPosition, board } = gameState;
+    if (status !== 'playing' || !currentTetrimino || clearingLines.length > 0) {
       return;
     }
 
     const moved = tryMove(
-      gameState.board,
-      gameState.currentTetrimino,
-      gameState.currentPosition,
+      board,
+      currentTetrimino,
+      currentPosition,
       'down',
     );
 
@@ -157,14 +153,14 @@ export function Game() {
       }
     }
   }, [
-    gameState.status,
     gameState.board,
-    gameState.currentTetrimino,
     gameState.currentPosition,
+    gameState.currentTetrimino,
+    gameState.status,
     clearingLines,
-    moveTetrimino,
-    lockTetrimino,
     isGrounded,
+    lockTetrimino,
+    moveTetrimino,
   ]);
 
   // Setup automatic drop timer
@@ -185,21 +181,22 @@ export function Game() {
         clearInterval(dropTimerRef.current);
       }
     };
-  }, [gameState.status, handleAutoDrop]); // Bug: missing dependency
+  }, [gameState.level, gameState.status, handleAutoDrop]);
 
   // Keyboard controls
   const handleMoveLeft = useCallback(() => {
-    if (
-      gameState.status !== 'playing'
-      || !gameState.currentTetrimino
-      || !gameState.currentPosition
-    )
-      return;
+    const {
+      status,
+      currentTetrimino,
+      currentPosition,
+      board,
+    } = gameState;
+    if (status !== 'playing' || !currentTetrimino || !currentPosition) return;
 
     const moved = tryMove(
-      gameState.board,
-      gameState.currentTetrimino,
-      gameState.currentPosition,
+      board,
+      currentTetrimino,
+      currentPosition,
       'left',
     );
     if (moved.success) {
@@ -214,20 +211,21 @@ export function Game() {
         }, 1000);
       }
     }
-  }, [gameState, moveTetrimino, isGrounded, lockTetrimino]);
+  }, [gameState.board, gameState.currentPosition, gameState.currentTetrimino, gameState.status, isGrounded, lockTetrimino, moveTetrimino]);
 
   const handleMoveRight = useCallback(() => {
-    if (
-      gameState.status !== 'playing'
-      || !gameState.currentTetrimino
-      || !gameState.currentPosition
-    )
-      return;
+    const {
+      status,
+      currentTetrimino,
+      currentPosition,
+      board,
+    } = gameState;
+    if (status !== 'playing' || !currentTetrimino || !currentPosition) return;
 
     const moved = tryMove(
-      gameState.board,
-      gameState.currentTetrimino,
-      gameState.currentPosition,
+      board,
+      currentTetrimino,
+      currentPosition,
       'right',
     );
     if (moved.success) {
@@ -242,21 +240,18 @@ export function Game() {
         }, 1000);
       }
     }
-  }, [gameState, moveTetrimino, isGrounded, lockTetrimino]);
+  }, [gameState.board, gameState.currentPosition, gameState.currentTetrimino, gameState.status, isGrounded, lockTetrimino, moveTetrimino]);
 
   const handleRotate = useCallback(() => {
-    if (
-      gameState.status !== 'playing'
-      || !gameState.currentTetrimino
-      || !gameState.currentPosition
-    )
-      return;
+    const {
+      status,
+      currentTetrimino,
+      currentPosition,
+      board,
+    } = gameState;
+    if (status !== 'playing' || !currentTetrimino || !currentPosition) return;
 
-    const result = tryRotateWithKick(
-      gameState.board,
-      gameState.currentTetrimino,
-      gameState.currentPosition,
-    );
+    const result = tryRotateWithKick(board, currentTetrimino, currentPosition);
     if (result.success) {
       setCurrentTetrimino(result.tetrimino, result.position);
       // Reset lock timer if piece is grounded and rotates successfully
@@ -267,22 +262,18 @@ export function Game() {
         }, 500);
       }
     }
-  }, [gameState, setCurrentTetrimino, isGrounded, lockTetrimino]);
+  }, [gameState.board, gameState.currentPosition, gameState.currentTetrimino, gameState.status, isGrounded, lockTetrimino, setCurrentTetrimino]);
 
   const handleSoftDrop = useCallback(() => {
-    if (
-      gameState.status !== 'playing'
-      || !gameState.currentTetrimino
-      || !gameState.currentPosition
-    )
-      return;
+    const {
+      status,
+      currentTetrimino,
+      currentPosition,
+      board,
+    } = gameState;
+    if (status !== 'playing' || !currentTetrimino || !currentPosition) return;
 
-    const moved = tryMove(
-      gameState.board,
-      gameState.currentTetrimino,
-      gameState.currentPosition,
-      'down',
-    );
+    const moved = tryMove(board, currentTetrimino, currentPosition, 'down');
     if (moved.success) {
       moveTetrimino('down');
       setIsGrounded(false);

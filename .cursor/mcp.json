@@ -11,6 +11,11 @@
         "@modelcontextprotocol/server-sequential-thinking"
       ]
     },
+    "ESLint": {
+			"type": "stdio",
+			"command": "bunx",
+			"args": ["@eslint/mcp@latest"]
+		},
     "Context7": {
       "command": "bunx",
       "args": ["@upstash/context7-mcp"]

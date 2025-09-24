@@ -85,16 +85,11 @@ export const TETRIMINOS: Record<TetriminoType, Tetrimino> = {
 
 // Rotate a tetrimino 90 degrees clockwise
 export function rotateTetrimino(tetrimino: Tetrimino): Tetrimino {
-  const n = tetrimino.shape.length;
-  const rotatedShape = Array(n)
-    .fill(null)
-    .map(() => Array(n).fill(0));
-
-  for (let i = 0; i < n; i++) {
-    for (let j = 0; j < n; j++) {
-      rotatedShape[j][n - 1 - i] = tetrimino.shape[i][j];
-    }
-  }
+  const rotatedShape = tetrimino.shape[0].map((_, colIndex) =>
+    tetrimino.shape
+      .map(row => row[colIndex])
+      .reverse(),
+  );
 
   return {
     ...tetrimino,

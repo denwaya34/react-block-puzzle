@@ -47,16 +47,16 @@ export function createRandomGenerator(seed?: number): TetriminoGenerator {
       if (nextTetrimino) {
         const current = nextTetrimino;
         nextTetrimino = null;
-        return current;
+        return { ...current };
       }
-      return generateTetrimino();
+      return { ...generateTetrimino() };
     },
 
     peek(): Tetrimino {
       if (!nextTetrimino) {
         nextTetrimino = generateTetrimino();
       }
-      return nextTetrimino;
+      return { ...nextTetrimino };
     },
   };
 }

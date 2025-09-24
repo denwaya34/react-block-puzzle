@@ -47,7 +47,11 @@ export function GameOverScreen({
           </div>
         </div>
 
-        <button className={styles.newGameButton} onClick={onNewGame}>
+        <button
+          type="button"
+          className={styles.newGameButton}
+          onClick={onNewGame}
+        >
           New Game
         </button>
       </div>
