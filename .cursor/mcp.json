@@ -1,0 +1,23 @@
+{
+  "mcpServers": {
+    "Playwright": {
+      "command": "bunx @playwright/mcp@latest",
+      "env": {},
+      "args": []
+    },
+    "Context7": {
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {}
+    },
+    "codex": {
+      "type": "stdio",
+      "command": "bunx",
+      "args": [
+        "-y",
+        "codex",
+        "mcp"
+      ],
+      "env": {}
+    }
+  }
+}
