@@ -12,7 +12,7 @@ export default defineConfig({
     checker({
       typescript: true,
     }),
-    tailwindcss()
+    tailwindcss(),
   ],
   css: {
     modules: {
