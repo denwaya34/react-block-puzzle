@@ -73,7 +73,7 @@ export function useCompliment(): ComplimentControls {
     const utterance = new SpeechSynthesisUtterance(compliment);
     utterance.rate = 1.05;
     utterance.pitch = 1.05;
-    utterance.volume = 0.9;
+    utterance.volume = 1;
 
     if (selectedVoice) {
       utterance.voice = selectedVoice;

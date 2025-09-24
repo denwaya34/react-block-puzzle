@@ -18,6 +18,7 @@ export function useGameSound(): GameSoundControls {
 
   const backgroundSynthRef = useRef<Tone.PolySynth | null>(null);
   const sequenceRef = useRef<Tone.Part<SequenceStep> | Tone.Sequence<SequenceStep> | null>(null);
+  const backgroundGainRef = useRef<Tone.Gain | null>(null);
   const lockSynthRef = useRef<Tone.MembraneSynth | null>(null);
   const noiseImpactSynthRef = useRef<Tone.NoiseSynth | null>(null);
   const impactBusRef = useRef<Tone.Gain | null>(null);
@@ -35,6 +36,9 @@ export function useGameSound(): GameSoundControls {
 
     backgroundSynthRef.current?.dispose();
     backgroundSynthRef.current = null;
+
+    backgroundGainRef.current?.dispose();
+    backgroundGainRef.current = null;
 
     lockSynthRef.current?.dispose();
     lockSynthRef.current = null;
@@ -102,11 +106,14 @@ export function useGameSound(): GameSoundControls {
         const impactBus = new Tone.Gain(-8).connect(limiter);
         impactBusRef.current = impactBus;
 
+        const backgroundGain = new Tone.Gain(0.1).toDestination();
+        backgroundGainRef.current = backgroundGain;
+
         const backgroundSynth = new Tone.PolySynth(Tone.Synth, {
           oscillator: { type: 'triangle' },
           envelope: { attack: 0.4, decay: 0.1, release: 0.9 },
-          volume: -6,
-        }).toDestination();
+          volume: 0,
+        }).connect(backgroundGain);
         backgroundSynthRef.current = backgroundSynth;
 
         const steps: SequenceStep[] = [
