@@ -20,6 +20,12 @@ export function useGameSound(): GameSoundControls {
   const sequenceRef = useRef<Tone.Part<SequenceStep> | Tone.Sequence<SequenceStep> | null>(null);
   const lockSynthRef = useRef<Tone.MembraneSynth | null>(null);
   const noiseImpactSynthRef = useRef<Tone.NoiseSynth | null>(null);
+  const impactBusRef = useRef<Tone.Gain | null>(null);
+  const limiterRef = useRef<Tone.Limiter | null>(null);
+  const lowBoomRef = useRef<Tone.MembraneSynth | null>(null);
+  const midCrackRef = useRef<Tone.FMSynth | null>(null);
+  const airBurstRef = useRef<Tone.NoiseSynth | null>(null);
+  const airFilterRef = useRef<Tone.Filter | null>(null);
 
   const [isReady, setIsReady] = useState(false);
 
@@ -35,6 +41,24 @@ export function useGameSound(): GameSoundControls {
 
     noiseImpactSynthRef.current?.dispose();
     noiseImpactSynthRef.current = null;
+
+    impactBusRef.current?.dispose();
+    impactBusRef.current = null;
+
+    limiterRef.current?.dispose();
+    limiterRef.current = null;
+
+    lowBoomRef.current?.dispose();
+    lowBoomRef.current = null;
+
+    midCrackRef.current?.dispose();
+    midCrackRef.current = null;
+
+    airBurstRef.current?.dispose();
+    airBurstRef.current = null;
+
+    airFilterRef.current?.dispose();
+    airFilterRef.current = null;
   }, []);
 
   const syncTransport = useCallback((status: GameStatus) => {
@@ -71,6 +95,12 @@ export function useGameSound(): GameSoundControls {
         await Tone.start();
 
         Tone.getDestination().volume.value = -10;
+
+        const limiter = new Tone.Limiter(-6).toDestination();
+        limiterRef.current = limiter;
+
+        const impactBus = new Tone.Gain(-8).connect(limiter);
+        impactBusRef.current = impactBus;
 
         const backgroundSynth = new Tone.PolySynth(Tone.Synth, {
           oscillator: { type: 'triangle' },
@@ -115,7 +145,7 @@ export function useGameSound(): GameSoundControls {
           volume: -4,
           envelope: { attack: 0.001, decay: 0.3, sustain: 0, release: 0.2 },
           octaves: 5,
-        }).toDestination();
+        }).connect(impactBus);
         lockSynthRef.current = lockSynth;
 
         const noiseImpact = new Tone.NoiseSynth({
@@ -123,8 +153,50 @@ export function useGameSound(): GameSoundControls {
           envelope: { attack: 0.005, decay: 0.1, sustain: 0 },
           noise: { type: 'white' },
         });
-        noiseImpact.toDestination();
+        noiseImpact.connect(impactBus);
         noiseImpactSynthRef.current = noiseImpact;
+
+        lowBoomRef.current = new Tone.MembraneSynth({
+          pitchDecay: 0.022,
+          octaves: 7,
+          envelope: { attack: 0.001, decay: 0.25, sustain: 0, release: 0.18 },
+          volume: -2,
+        }).connect(impactBus);
+
+        midCrackRef.current = new Tone.FMSynth({
+          harmonicity: 8,
+          modulationIndex: 24,
+          oscillator: { type: 'square' },
+          modulation: { type: 'triangle' },
+          envelope: {
+            attack: 0.0005,
+            decay: 0.09,
+            sustain: 0,
+            release: 0.06,
+          },
+          modulationEnvelope: {
+            attack: 0.0005,
+            decay: 0.12,
+            sustain: 0,
+            release: 0.08,
+          },
+          volume: -6,
+        }).connect(impactBus);
+
+        const airFilter = new Tone.Filter({
+          type: 'bandpass',
+          frequency: 4600,
+          Q: 1.8,
+        });
+        airFilterRef.current = airFilter;
+
+        airBurstRef.current = new Tone.NoiseSynth({
+          noise: { type: 'white' },
+          envelope: { attack: 0.001, decay: 0.16, sustain: 0 },
+          volume: -12,
+        })
+          .connect(airFilter)
+          .connect(impactBus);
 
         initializedRef.current = true;
         setIsReady(true);
@@ -155,8 +227,29 @@ export function useGameSound(): GameSoundControls {
 
     const now = Tone.now();
 
-    lockSynthRef.current?.triggerAttackRelease('C2', '16n', now);
-    noiseImpactSynthRef.current?.triggerAttackRelease('16n', now + 0.02);
+    const lowBoom = lowBoomRef.current;
+    if (lowBoom) {
+      lowBoom.triggerAttack('F1', now);
+      lowBoom.frequency.exponentialRampToValueAtTime(45, now + 0.22);
+      lowBoom.triggerRelease(now + 0.24);
+    }
+
+    const midCrack = midCrackRef.current;
+    if (midCrack) {
+      midCrack.triggerAttack('C3', now + 0.016);
+      midCrack.frequency.exponentialRampToValueAtTime(100, now + 0.18);
+      midCrack.triggerRelease(now + 0.19);
+    }
+
+    const airBurst = airBurstRef.current;
+    const airFilter = airFilterRef.current;
+    if (airBurst) {
+      airBurst.triggerAttackRelease('16n', now + 0.01);
+      if (airFilter) {
+        airFilter.frequency.setValueAtTime(6200, now + 0.01);
+        airFilter.frequency.exponentialRampToValueAtTime(1400, now + 0.18);
+      }
+    }
   }, []);
 
   useEffect(() => {

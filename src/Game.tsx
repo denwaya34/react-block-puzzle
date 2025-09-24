@@ -9,6 +9,7 @@ import {
 import { useGameState } from '@/hooks/useGameState';
 import { useKeyboardInput } from '@/hooks/useKeyboardInput';
 import { useGameSound } from '@/hooks/useSound';
+import { useCompliment } from '@/hooks/useCompliment';
 import { tryMove, tryRotateWithKick } from '@/services/movementController';
 import {
   findCompletedLines,
@@ -60,6 +61,7 @@ export function Game() {
   const isClearingInProgress = clearingLines.length > 0;
 
   const { initializeAudio, syncGameStatus, playBlockLockSound } = useGameSound();
+  const { speakCompliment, isSupported: isSpeechSupported } = useCompliment();
 
   useEffect(() => {
     syncGameStatus(status);
@@ -102,6 +104,9 @@ export function Game() {
     );
 
     playBlockLockSound();
+    if (isSpeechSupported) {
+      speakCompliment();
+    }
 
     // Check for completed lines
     const completedLines = findCompletedLines(newBoard);
@@ -135,6 +140,8 @@ export function Game() {
     updateScore,
     spawnNewTetrimino,
     playBlockLockSound,
+    speakCompliment,
+    isSpeechSupported,
   ]);
 
   // Handle automatic drop
