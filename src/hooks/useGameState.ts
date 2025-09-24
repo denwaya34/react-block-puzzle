@@ -1,9 +1,10 @@
 import { useReducer, useCallback } from "react";
-import { Board, createEmptyBoard, Position } from "@/types/board";
+import type { Board, Position } from "@/types/board";
+import { createEmptyBoard } from "@/types/board";
 import { GameState, GameStatus } from "@/types/game";
 import {
-  Tetrimino,
-  TetriminoType,
+  type Tetrimino,
+  type TetriminoType,
   TETRIMINOS,
   rotateTetrimino,
 } from "@/types/tetrimino";

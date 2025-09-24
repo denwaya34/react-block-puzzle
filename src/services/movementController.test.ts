@@ -5,7 +5,7 @@ import {
   tryRotateWithKick,
 } from "./movementController";
 import { createEmptyBoard, BOARD_WIDTH, BOARD_HEIGHT } from "@/types/board";
-import { Tetrimino, TETRIMINOS } from "@/types/tetrimino";
+import { type Tetrimino, TETRIMINOS } from "@/types/tetrimino";
 
 describe("MovementController", () => {
   describe("tryMove", () => {

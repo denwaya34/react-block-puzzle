@@ -1,5 +1,5 @@
 import React from "react";
-import { Tetrimino } from "@/types/tetrimino";
+import { type Tetrimino } from "@/types/tetrimino";
 import styles from "./NextPiecePreview.module.css";
 
 interface NextPiecePreviewProps {

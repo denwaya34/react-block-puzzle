@@ -1,5 +1,7 @@
-import { Board, Position, BOARD_WIDTH, BOARD_HEIGHT } from "@/types/board";
-import { Tetrimino, rotateTetrimino } from "@/types/tetrimino";
+import type { Board, Position } from "@/types/board";
+import { BOARD_WIDTH, BOARD_HEIGHT } from "@/types/board";
+import type { Tetrimino } from "@/types/tetrimino";
+import { rotateTetrimino } from "@/types/tetrimino";
 
 /**
  * Check if a tetrimino position is valid (no collision and within bounds)

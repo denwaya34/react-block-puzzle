@@ -1,5 +1,7 @@
-import { Board, Position, BOARD_WIDTH, BOARD_HEIGHT } from "@/types/board";
-import { Tetrimino, TetriminoType, TETRIMINOS } from "@/types/tetrimino";
+import type { Board, Position } from "@/types/board";
+import { BOARD_WIDTH, BOARD_HEIGHT } from "@/types/board";
+import type { Tetrimino, TetriminoType } from "@/types/tetrimino";
+import { TETRIMINOS } from "@/types/tetrimino";
 import { isValidPosition } from "./collisionDetector";
 
 /**

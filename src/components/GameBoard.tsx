@@ -1,6 +1,7 @@
 import React from "react";
-import { Board, Position, BOARD_WIDTH, BOARD_HEIGHT } from "@/types/board";
-import { Tetrimino } from "@/types/tetrimino";
+import type { Board, Position } from "@/types/board";
+import { BOARD_WIDTH, BOARD_HEIGHT } from "@/types/board";
+import type { Tetrimino } from "@/types/tetrimino";
 import styles from "./GameBoard.module.css";
 
 interface GameBoardProps {

@@ -1,4 +1,5 @@
-import { Board, BOARD_WIDTH, BOARD_HEIGHT } from "@/types/board";
+import type { Board } from "@/types/board";
+import { BOARD_WIDTH, BOARD_HEIGHT } from "@/types/board";
 
 /**
  * Find all completed (filled) lines in the board

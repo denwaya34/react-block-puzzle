@@ -1,5 +1,6 @@
-import { Board, Position } from "@/types/board";
-import { Tetrimino, TetriminoType, rotateTetrimino } from "@/types/tetrimino";
+import type { Board, Position } from "@/types/board";
+import type { Tetrimino, TetriminoType } from "@/types/tetrimino";
+import { rotateTetrimino } from "@/types/tetrimino";
 import { isValidPosition } from "./collisionDetector";
 
 export type Direction = "left" | "right" | "down";
