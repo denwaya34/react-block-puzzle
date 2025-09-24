@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
-  TetriminoType,
-  Tetrimino,
+  type TetriminoType,
+  type Tetrimino,
   TETRIMINOS,
   rotateTetrimino,
 } from "./tetrimino";
