@@ -31,6 +31,7 @@ export const ScorePanel = React.memo(function ScorePanel({
 
   return (
     <div className={styles.scorePanel}>
+      <span className={styles.headerGlow} aria-hidden="true" />
       <div className={styles.statBlock}>
         <div className={styles.label}>Score</div>
         <div className={styles.value}>{formatScore(score)}</div>
@@ -38,7 +39,10 @@ export const ScorePanel = React.memo(function ScorePanel({
 
       <div className={styles.statBlock}>
         <div className={styles.label}>Level</div>
-        <div className={styles.value}>{level}</div>
+        <div className={styles.value}>
+          {level}
+          <span className={styles.valueShadow}>lvl</span>
+        </div>
         <div className={`${styles.progressBar} progressBar`}>
           <div
             className={`${styles.progressFill} progressFill`}
@@ -49,7 +53,10 @@ export const ScorePanel = React.memo(function ScorePanel({
 
       <div className={styles.statBlock}>
         <div className={styles.label}>Lines</div>
-        <div className={styles.value}>{lines}</div>
+        <div className={styles.value}>
+          {lines}
+          <span className={styles.valueShadow}>cleared</span>
+        </div>
       </div>
     </div>
   );

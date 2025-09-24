@@ -329,6 +329,7 @@ export function Game() {
 
   return (
     <div className={styles.game}>
+      <div className={styles.haloOrbit} aria-hidden="true" />
       <div className={styles.mainArea}>
         <div className={styles.sidePanel}>
           <NextPiecePreview nextTetrimino={nextTetrimino} />

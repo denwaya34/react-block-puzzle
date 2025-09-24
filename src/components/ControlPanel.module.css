@@ -1,150 +1,231 @@
 .controlPanel {
-  background-color: #1a1a1a;
-  border: 2px solid #333;
-  border-radius: 8px;
-  padding: 16px;
-  min-width: 200px;
+  position: relative;
+  display: grid;
+  gap: clamp(1.2rem, 2.5vw, 2rem);
+  padding: clamp(1.3rem, 2.6vw, 2rem);
+  border-radius: clamp(1.2rem, 2.8vw, 2rem);
+  background:
+    linear-gradient(160deg, rgba(20, 26, 55, 0.9), rgba(7, 10, 25, 0.96)),
+    linear-gradient(165deg, rgba(65, 111, 255, 0.16), rgba(255, 109, 189, 0.18));
+  box-shadow:
+    inset 0 0 0 1px rgba(127, 189, 255, 0.2),
+    0 18px 36px rgba(3, 8, 23, 0.65);
+  overflow: hidden;
+}
+
+.controlPanel::before {
+  content: "";
+  position: absolute;
+  inset: clamp(0.9rem, 2vw, 1.6rem);
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .status {
-  display: flex;
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: clamp(0.65rem, 1.2vw, 0.85rem);
+  padding: clamp(0.9rem, 1.6vw, 1.2rem);
+  border-radius: clamp(0.9rem, 1.8vw, 1.3rem);
+  background: linear-gradient(135deg, rgba(19, 27, 59, 0.75), rgba(12, 16, 28, 0.9));
+  box-shadow: inset 0 0 0 1px rgba(104, 164, 255, 0.2);
   align-items: center;
-  gap: 8px;
-  margin-bottom: 16px;
-  padding: 8px;
-  border-radius: 4px;
-  background-color: #222;
+}
+
+.status::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 0% 0%, rgba(105, 207, 255, 0.35), rgba(105, 207, 255, 0));
+  opacity: 0.5;
 }
 
 .statusIndicator {
-  width: 12px;
-  height: 12px;
+  width: clamp(1.1rem, 1.5vw, 1.35rem);
+  height: clamp(1.1rem, 1.5vw, 1.35rem);
   border-radius: 50%;
-  animation: pulse 2s ease-in-out infinite;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.2),
+    0 0 18px currentColor;
+  animation: statusPulse 2.2s ease-in-out infinite;
+  justify-self: start;
 }
 
 .statusIdle .statusIndicator,
 .statusIndicator.statusIdle {
-  background-color: #666;
+  color: #7e8aa6;
   animation: none;
 }
 
 .statusPlaying .statusIndicator,
 .statusIndicator.statusPlaying {
-  background-color: #4caf50;
+  color: #5ef6b1;
 }
 
 .statusPaused .statusIndicator,
 .statusIndicator.statusPaused {
-  background-color: #ff9800;
-  animation: none;
+  color: #ffc073;
+  animation-duration: 3.6s;
 }
 
 .statusGameOver .statusIndicator,
 .statusIndicator.statusGameOver {
-  background-color: #f44336;
+  color: #ff7b99;
   animation: none;
 }
 
 .statusText {
-  font-size: 14px;
-  font-weight: bold;
-  color: #fff;
+  font-size: clamp(0.85rem, 1.2vw, 1rem);
+  font-weight: 600;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  color: rgba(217, 230, 255, 0.85);
+}
+
+.statusIdle .statusText {
+  color: rgba(193, 204, 229, 0.75);
+}
+
+.statusPlaying .statusText {
+  color: rgba(168, 255, 219, 0.85);
+}
+
+.statusPaused .statusText {
+  color: rgba(255, 214, 170, 0.85);
+}
+
+.statusGameOver .statusText {
+  color: rgba(255, 184, 206, 0.8);
 }
 
 .buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 20px;
+  display: grid;
+  gap: clamp(0.8rem, 1.6vw, 1.1rem);
 }
 
 .button {
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  position: relative;
+  padding: clamp(0.9rem, 1.8vw, 1.15rem);
   border: none;
-  border-radius: 4px;
+  border-radius: clamp(0.85rem, 1.4vw, 1.1rem);
+  font-size: clamp(0.75rem, 1vw, 0.85rem);
+  letter-spacing: 0.22em;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: rgba(12, 18, 36, 0.95);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    background 0.22s ease;
+  overflow: hidden;
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0));
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
 }
 
 .button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transform: translateY(-3px);
+  box-shadow:
+    0 16px 30px rgba(0, 0, 0, 0.45),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.25);
 }
 
 .button:active {
   transform: translateY(0);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.35);
 }
 
 .primaryButton {
-  background-color: #4caf50;
-  color: white;
-}
-
-.primaryButton:hover {
-  background-color: #5cbf60;
+  background: linear-gradient(135deg, rgba(103, 247, 206, 1), rgba(72, 188, 255, 0.95));
+  box-shadow: 0 10px 22px rgba(84, 217, 255, 0.45);
 }
 
 .pauseButton {
-  background-color: #ff9800;
-  color: white;
-}
-
-.pauseButton:hover {
-  background-color: #ffa726;
+  background: linear-gradient(135deg, rgba(255, 205, 109, 1), rgba(255, 150, 72, 0.95));
+  box-shadow: 0 10px 22px rgba(255, 150, 72, 0.45);
 }
 
 .resetButton {
-  background-color: #666;
-  color: white;
-}
-
-.resetButton:hover {
-  background-color: #777;
+  background: linear-gradient(135deg, rgba(144, 158, 192, 1), rgba(104, 125, 163, 0.92));
+  box-shadow: 0 10px 22px rgba(125, 144, 178, 0.4);
 }
 
 .shortcuts {
-  border-top: 1px solid #333;
-  padding-top: 12px;
+  position: relative;
+  border-top: 1px solid rgba(120, 167, 255, 0.2);
+  padding-top: clamp(0.9rem, 1.6vw, 1.2rem);
+  display: grid;
+  gap: clamp(0.6rem, 1.2vw, 0.85rem);
+}
+
+.shortcuts::before {
+  content: "Key Atlas";
+  position: absolute;
+  top: clamp(-1.35rem, -2.2vw, -1.1rem);
+  right: clamp(0.5rem, 1.2vw, 1rem);
+  font-size: clamp(0.55rem, 0.8vw, 0.7rem);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(177, 205, 255, 0.35);
 }
 
 .shortcutItem {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 6px;
-  font-size: 12px;
+  justify-content: space-between;
+  gap: clamp(0.7rem, 1.2vw, 1rem);
+  font-size: clamp(0.7rem, 1vw, 0.85rem);
+  color: rgba(191, 212, 255, 0.75);
 }
 
 .key {
-  display: inline-block;
-  min-width: 45px;
-  padding: 2px 6px;
-  background-color: #333;
-  border: 1px solid #444;
-  border-radius: 3px;
-  color: #fff;
-  font-family: monospace;
-  font-size: 11px;
-  text-align: center;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: clamp(2.5rem, 3vw, 3.2rem);
+  padding: clamp(0.35rem, 0.65vw, 0.5rem) clamp(0.55rem, 1vw, 0.8rem);
+  border-radius: clamp(0.45rem, 0.8vw, 0.65rem);
+  background:
+    linear-gradient(140deg, rgba(29, 41, 70, 0.85), rgba(9, 14, 30, 0.95)),
+    linear-gradient(140deg, rgba(121, 186, 255, 0.16), rgba(255, 173, 240, 0.12));
+  border: 1px solid rgba(132, 188, 255, 0.25);
+  font-family: "IBM Plex Mono", "Space Grotesk", monospace;
+  font-size: clamp(0.6rem, 0.9vw, 0.8rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(212, 226, 255, 0.85);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
 .keyLabel {
-  color: #888;
+  color: rgba(160, 189, 255, 0.6);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
-@keyframes pulse {
+@keyframes statusPulse {
   0%,
   100% {
     opacity: 1;
+    transform: scale(1);
   }
+
   50% {
-    opacity: 0.5;
+    opacity: 0.45;
+    transform: scale(0.92);
   }
 }

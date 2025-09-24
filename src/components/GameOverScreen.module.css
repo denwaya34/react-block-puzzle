@@ -1,113 +1,175 @@
 .overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.85);
+  inset: 0;
+  background:
+    radial-gradient(120% 140% at 15% 15%, rgba(66, 145, 255, 0.24), rgba(4, 8, 18, 0.92) 52%),
+    radial-gradient(120% 120% at 85% 15%, rgba(255, 101, 216, 0.22), rgba(4, 8, 18, 0.92) 60%),
+    rgba(3, 6, 16, 0.92);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  animation: fadeIn 0.3s ease-in;
+  backdrop-filter: blur(12px);
+  animation: veil 0.4s ease-in;
 }
 
 .content {
-  background-color: #1a1a1a;
-  border: 3px solid #f44336;
-  border-radius: 12px;
-  padding: 40px;
-  min-width: 350px;
+  position: relative;
+  display: grid;
+  gap: clamp(1.8rem, 3vw, 2.6rem);
+  padding: clamp(2.5rem, 5vw, 4rem);
+  min-width: min(420px, 90vw);
   text-align: center;
-  box-shadow: 0 0 40px rgba(244, 67, 54, 0.5);
-  animation: slideIn 0.4s ease-out;
+  border-radius: clamp(1.6rem, 3.5vw, 2.8rem);
+  background:
+    linear-gradient(155deg, rgba(18, 24, 52, 0.94), rgba(8, 9, 22, 0.97)),
+    linear-gradient(145deg, rgba(255, 115, 232, 0.15), rgba(109, 186, 255, 0.14));
+  box-shadow:
+    0 30px 70px rgba(3, 6, 16, 0.75),
+    inset 0 0 0 1px rgba(133, 196, 255, 0.22);
+  overflow: hidden;
+  animation: summit 0.45s ease-out;
+}
+
+.content::before,
+.content::after {
+  content: "";
+  position: absolute;
+  inset: clamp(1.2rem, 2.6vw, 2rem);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.content::before {
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  opacity: 0.6;
+}
+
+.content::after {
+  inset: clamp(1.9rem, 3.8vw, 3.2rem);
+  border: 1px solid rgba(107, 189, 255, 0.18);
+  filter: blur(0.5px);
+  opacity: 0.35;
 }
 
 .title {
-  font-size: 48px;
-  font-weight: bold;
-  color: #f44336;
-  margin: 0 0 30px 0;
+  position: relative;
+  margin: 0;
+  padding-bottom: clamp(1rem, 2vw, 1.4rem);
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  font-weight: 600;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
-  letter-spacing: 3px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  color: rgba(246, 167, 255, 0.95);
+  text-shadow:
+    0 12px 32px rgba(214, 118, 255, 0.4),
+    0 0 22px rgba(255, 255, 255, 0.22);
+}
+
+.title::after {
+  content: "Game Over";
+  position: absolute;
+  inset: auto 0 clamp(-0.6rem, -1vw, -0.4rem) 0;
+  font-size: clamp(0.55rem, 0.9vw, 0.8rem);
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: rgba(167, 199, 255, 0.25);
 }
 
 .stats {
-  margin-bottom: 30px;
-}
-
-.statItem {
-  margin-bottom: 20px;
+  display: grid;
+  gap: clamp(1.2rem, 2.4vw, 1.8rem);
 }
 
 .statRow {
-  display: flex;
-  justify-content: space-around;
-  gap: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: clamp(1rem, 2vw, 1.6rem);
+}
+
+.statItem {
+  display: grid;
+  gap: clamp(0.6rem, 1vw, 0.85rem);
+  padding: clamp(0.9rem, 1.8vw, 1.4rem);
+  border-radius: clamp(0.9rem, 1.8vw, 1.4rem);
+  background: linear-gradient(140deg, rgba(20, 28, 65, 0.65), rgba(8, 9, 23, 0.78));
+  box-shadow: inset 0 0 0 1px rgba(126, 182, 255, 0.18);
 }
 
 .statLabel {
-  font-size: 14px;
-  color: #888;
+  font-size: clamp(0.65rem, 0.9vw, 0.78rem);
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 8px;
+  color: rgba(182, 207, 255, 0.65);
 }
 
 .statValue {
-  font-size: 32px;
-  font-weight: bold;
-  color: #fff;
-  font-family: "Courier New", monospace;
+  font-size: clamp(1.8rem, 3.4vw, 2.9rem);
+  font-weight: 600;
+  color: #fdfdff;
+  font-family: "IBM Plex Mono", "Space Grotesk", monospace;
+  text-shadow: 0 12px 24px rgba(6, 12, 32, 0.65);
 }
 
 .statItem:first-child .statValue {
-  font-size: 42px;
-  color: #ffc107;
+  color: rgba(255, 229, 144, 0.96);
+  text-shadow:
+    0 12px 25px rgba(255, 199, 87, 0.45),
+    0 0 18px rgba(255, 199, 87, 0.35);
 }
 
 .newGameButton {
-  padding: 14px 32px;
-  font-size: 18px;
-  font-weight: bold;
+  justify-self: center;
+  padding: clamp(0.95rem, 2vw, 1.4rem) clamp(2.5rem, 4vw, 3.6rem);
+  font-size: clamp(0.8rem, 1.2vw, 1rem);
+  letter-spacing: 0.28em;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  background-color: #4caf50;
-  color: white;
+  font-weight: 600;
+  color: rgba(10, 18, 34, 0.95);
+  background:
+    linear-gradient(135deg, rgba(108, 248, 206, 0.95), rgba(99, 196, 255, 0.95)),
+    linear-gradient(135deg, rgba(203, 255, 223, 0.45), rgba(150, 206, 255, 0.45));
   border: none;
-  border-radius: 6px;
+  border-radius: clamp(0.95rem, 2vw, 1.4rem);
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 45px rgba(101, 214, 255, 0.45);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .newGameButton:hover {
-  background-color: #5cbf60;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 28px 60px rgba(101, 214, 255, 0.6);
 }
 
 .newGameButton:active {
   transform: translateY(0);
+  box-shadow: 0 12px 28px rgba(101, 214, 255, 0.4);
 }
 
-@keyframes fadeIn {
-  from {
+@keyframes veil {
+  0% {
     opacity: 0;
   }
-  to {
+
+  100% {
     opacity: 1;
   }
 }
 
-@keyframes slideIn {
-  from {
-    transform: scale(0.8) translateY(-20px);
+@keyframes summit {
+  0% {
+    transform: translateY(24px) scale(0.94);
     opacity: 0;
   }
-  to {
-    transform: scale(1) translateY(0);
+
+  60% {
+    transform: translateY(-6px) scale(1.02);
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
     opacity: 1;
   }
 }

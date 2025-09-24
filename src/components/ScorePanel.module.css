@@ -1,44 +1,106 @@
 .scorePanel {
-  background-color: #1a1a1a;
-  border: 2px solid #333;
-  border-radius: 8px;
-  padding: 16px;
-  min-width: 200px;
+  position: relative;
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  padding: clamp(1.25rem, 2.5vw, 1.85rem);
+  border-radius: clamp(1.2rem, 2.8vw, 2rem);
+  background:
+    linear-gradient(145deg, rgba(17, 22, 48, 0.9), rgba(9, 12, 27, 0.96)),
+    linear-gradient(145deg, rgba(64, 123, 255, 0.16), rgba(244, 66, 255, 0.14));
+  box-shadow:
+    inset 0 0 0 1px rgba(129, 190, 255, 0.22),
+    0 18px 36px rgba(4, 6, 18, 0.65);
+  overflow: hidden;
+}
+
+.scorePanel::before {
+  content: "";
+  position: absolute;
+  inset: 14% 10% auto 10%;
+  height: clamp(0.35rem, 1vw, 0.6rem);
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(93, 216, 255, 0.42), rgba(255, 121, 244, 0.35));
+  opacity: 0.6;
+  filter: blur(0.5px);
+}
+
+.headerGlow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(146, 204, 255, 0.18);
+  opacity: 0.35;
+  pointer-events: none;
 }
 
 .statBlock {
-  margin-bottom: 20px;
+  display: grid;
+  gap: clamp(0.4rem, 1vw, 0.75rem);
 }
 
-.statBlock:last-child {
-  margin-bottom: 0;
+.statBlock:first-child .label {
+  color: rgba(255, 220, 255, 0.65);
+  letter-spacing: 0.26em;
 }
 
 .label {
-  font-size: 14px;
-  color: #888;
+  font-size: clamp(0.65rem, 0.9vw, 0.78rem);
+  font-weight: 500;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 4px;
+  color: rgba(197, 218, 255, 0.7);
 }
 
 .value {
-  font-size: 24px;
-  font-weight: bold;
-  color: #fff;
-  font-family: "Courier New", monospace;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3em;
+  font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+  font-weight: 600;
+  line-height: 1;
+  color: #f8fbff;
+  font-family: "IBM Plex Mono", "Space Grotesk", monospace;
+  text-shadow: 0 8px 18px rgba(8, 16, 38, 0.65);
+}
+
+.valueShadow {
+  color: rgba(116, 207, 255, 0.38);
+  font-size: 0.45em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.statBlock:first-child .value {
+  font-size: clamp(2.2rem, 4vw, 3.3rem);
+  color: rgba(255, 245, 255, 0.95);
+  text-shadow:
+    0 12px 28px rgba(9, 20, 46, 0.55),
+    0 0 22px rgba(255, 174, 255, 0.35);
 }
 
 .progressBar {
-  margin-top: 8px;
-  height: 4px;
-  background-color: #333;
-  border-radius: 2px;
+  position: relative;
+  height: clamp(0.35rem, 0.6vw, 0.5rem);
+  border-radius: 999px;
+  background: rgba(54, 89, 130, 0.35);
   overflow: hidden;
 }
 
 .progressFill {
+  position: relative;
   height: 100%;
-  background: linear-gradient(90deg, #4caf50, #8bc34a);
-  transition: width 0.3s ease;
+  border-radius: inherit;
+  background:
+    linear-gradient(90deg, rgba(83, 221, 255, 1) 0%, rgba(184, 130, 255, 1) 100%),
+    linear-gradient(90deg, rgba(113, 255, 214, 0.65), rgba(92, 147, 255, 0.75));
+  box-shadow: 0 0 18px rgba(97, 224, 255, 0.55);
+  transition: width 0.35s ease;
+}
+
+.progressFill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0));
+  mix-blend-mode: screen;
 }

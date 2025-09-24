@@ -66,45 +66,48 @@ export const GameBoard = React.memo(function GameBoard({
 
   return (
     <div className={styles.gameBoard}>
-      {board.slice(0, BOARD_HEIGHT).map((boardRow, rowIndex) => {
-        const rowKey = createRowKey(rowIndex, boardRow);
-        const isClearing = clearingLinesSet.has(rowIndex);
-        return (
-          <div
-            key={rowKey}
-            className={`${styles.row} row ${isClearing ? styles.clearing : ''}`}
-          >
-            {boardRow.slice(0, BOARD_WIDTH).map((_, colIndex) => {
-              const cellState = getCellState(rowIndex, colIndex);
-              const classNames = [
-                styles.cell,
-                'cell',
-                cellState.filled ? styles.filled : styles.empty,
-                cellState.filled ? 'filled' : 'empty',
-                cellState.isPreview ? styles.preview : '',
-                cellState.isPreview ? 'preview' : '',
-                isClearing ? styles.clearingCell : '',
-              ]
-                .filter(Boolean)
-                .join(' ');
+      <div className={styles.quantumScan} aria-hidden="true" />
+      <div className={styles.gridWrap}>
+        {board.slice(0, BOARD_HEIGHT).map((boardRow, rowIndex) => {
+          const rowKey = createRowKey(rowIndex, boardRow);
+          const isClearing = clearingLinesSet.has(rowIndex);
+          return (
+            <div
+              key={rowKey}
+              className={`${styles.row} row ${isClearing ? styles.clearing : ''}`}
+            >
+              {boardRow.slice(0, BOARD_WIDTH).map((_, colIndex) => {
+                const cellState = getCellState(rowIndex, colIndex);
+                const classNames = [
+                  styles.cell,
+                  'cell',
+                  cellState.filled ? styles.filled : styles.empty,
+                  cellState.filled ? 'filled' : 'empty',
+                  cellState.isPreview ? styles.preview : '',
+                  cellState.isPreview ? 'preview' : '',
+                  isClearing ? styles.clearingCell : '',
+                ]
+                  .filter(Boolean)
+                  .join(' ');
 
-              const cellKey = `${rowKey}-col-${String(colIndex)}`;
+                const cellKey = `${rowKey}-col-${String(colIndex)}`;
 
-              return (
-                <div
-                  key={cellKey}
-                  className={classNames}
-                  style={{
-                    backgroundColor: cellState.filled
-                      ? cellState.color ?? undefined
-                      : undefined,
-                  }}
-                />
-              );
-            })}
-          </div>
-        );
-      })}
+                return (
+                  <div
+                    key={cellKey}
+                    className={classNames}
+                    style={{
+                      backgroundColor: cellState.filled
+                        ? cellState.color ?? undefined
+                        : undefined,
+                    }}
+                  />
+                );
+              })}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 });

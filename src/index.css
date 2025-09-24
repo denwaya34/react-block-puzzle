@@ -1,11 +1,12 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;600;700&display=swap");
 @plugin "daisyui" {
   themes: dark --default;
 }
 
 :root,
 [data-theme] {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Space Grotesk", Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -25,15 +26,19 @@
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  color: #f0f4ff;
+  background:
+    radial-gradient(120% 120% at 10% 10%, rgba(74, 177, 255, 0.25) 0%, rgba(10, 15, 30, 0) 55%),
+    radial-gradient(85% 95% at 90% 5%, rgba(255, 99, 231, 0.18) 0%, rgba(13, 10, 24, 0) 60%),
+    linear-gradient(135deg, #040b1a 0%, #0b1022 50%, #121835 100%);
+  background-attachment: fixed;
 }
 
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 3rem clamp(1rem, 3vw, 4rem);
 }

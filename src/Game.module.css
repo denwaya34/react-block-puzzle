@@ -1,60 +1,137 @@
 .game {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-  font-family: "Courier New", monospace;
+  position: relative;
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 3.5rem);
+  padding: clamp(1.5rem, 3vw, 3.5rem);
+  border-radius: clamp(1.5rem, 4vw, 3.5rem);
+  background:
+    linear-gradient(155deg, rgba(23, 32, 69, 0.85) 0%, rgba(9, 12, 28, 0.92) 40%, rgba(4, 9, 22, 0.96) 100%),
+    linear-gradient(120deg, rgba(64, 123, 255, 0.25), rgba(255, 132, 235, 0.1));
+  backdrop-filter: blur(16px);
+  box-shadow:
+    0 35px 80px rgba(0, 0, 0, 0.4),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.game::before,
+.game::after {
+  content: "";
+  position: absolute;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.game::before {
+  inset: -45% -35% auto;
+  height: 110%;
+  background: radial-gradient(circle at top left, rgba(99, 221, 255, 0.35), rgba(99, 221, 255, 0) 60%);
+  filter: blur(28px);
+  opacity: 0.9;
+}
+
+.game::after {
+  inset: auto -25% -55% auto;
+  height: 120%;
+  background: radial-gradient(circle at bottom right, rgba(255, 119, 239, 0.4), rgba(255, 119, 239, 0) 65%);
+  filter: blur(30px);
+  opacity: 0.6;
 }
 
 .mainArea {
-  display: flex;
-  gap: 30px;
-  align-items: flex-start;
-  justify-content: center;
-  margin-top: 20px;
+  position: relative;
+  display: grid;
+  grid-template-columns: clamp(220px, 18vw, 260px) minmax(300px, 1fr) clamp(220px, 18vw, 260px);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  align-items: start;
+  z-index: 1;
 }
 
 .sidePanel {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  min-width: 200px;
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.8rem);
+}
+
+.haloOrbit {
+  position: absolute;
+  inset: clamp(-2rem, -4vw, -3rem);
+  border-radius: clamp(2rem, 5vw, 4rem);
+  border: 1px solid rgba(115, 213, 255, 0.2);
+  opacity: 0.3;
+  animation: orbit 18s linear infinite;
+}
+
+.haloOrbit::after {
+  content: "";
+  position: absolute;
+  inset: clamp(0.75rem, 2vw, 1.5rem);
+  border-radius: inherit;
+  border: 1px solid rgba(255, 137, 250, 0.18);
+  animation: orbitReverse 22s linear infinite;
+}
+
+.mainArea::before {
+  content: "";
+  position: absolute;
+  inset: clamp(-1.2rem, -2vw, -1.5rem);
+  border-radius: clamp(1.6rem, 4vw, 3rem);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  z-index: -1;
+}
+
+.mainArea::after {
+  content: "";
+  position: absolute;
+  inset: clamp(-0.5rem, -1vw, -0.8rem);
+  border-radius: inherit;
+  background:
+    radial-gradient(60% 60% at 50% 0%, rgba(88, 204, 255, 0.22), rgba(88, 204, 255, 0));
+  opacity: 0.5;
+  z-index: -1;
+}
+
+@keyframes orbit {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbitReverse {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(-360deg);
+  }
 }
 
 /* Responsive design */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .mainArea {
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+    grid-template-columns: minmax(300px, 1fr);
   }
 
   .sidePanel {
-    flex-direction: row;
-    justify-content: center;
-    width: 100%;
-    max-width: 400px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
+}
 
+@media (max-width: 640px) {
   .game {
-    padding: 10px;
+    padding: clamp(1rem, 6vw, 1.75rem);
   }
-}
 
-/* Animation for game start */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
+  .mainArea {
+    gap: clamp(1rem, 4vw, 1.5rem);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
-.mainArea {
-  animation: fadeIn 0.5s ease-out;
+  .sidePanel {
+    grid-template-columns: 1fr;
+  }
 }
