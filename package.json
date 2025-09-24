@@ -14,9 +14,12 @@
     "test:coverage": "vitest --coverage"
   },
   "dependencies": {
+    "@tailwindcss/vite": "4.1.13",
+    "daisyui": "5.1.14",
     "dev3000": "0.0.67",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "tailwindcss": "4.1.13"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
