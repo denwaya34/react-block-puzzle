@@ -8,6 +8,7 @@ import {
 } from '@/components';
 import { useGameState } from '@/hooks/useGameState';
 import { useKeyboardInput } from '@/hooks/useKeyboardInput';
+import { useGameSound } from '@/hooks/useSound';
 import { tryMove, tryRotateWithKick } from '@/services/movementController';
 import {
   findCompletedLines,
@@ -58,6 +59,12 @@ export function Game() {
 
   const isClearingInProgress = clearingLines.length > 0;
 
+  const { initializeAudio, syncGameStatus, playBlockLockSound } = useGameSound();
+
+  useEffect(() => {
+    syncGameStatus(status);
+  }, [status, syncGameStatus]);
+
   // Spawn new tetrimino
   const spawnNewTetrimino = useCallback(() => {
     const activeTetrimino = nextTetrimino ?? generatorRef.current.next();
@@ -94,6 +101,8 @@ export function Game() {
       currentPosition,
     );
 
+    playBlockLockSound();
+
     // Check for completed lines
     const completedLines = findCompletedLines(newBoard);
 
@@ -125,6 +134,7 @@ export function Game() {
     updateBoard,
     updateScore,
     spawnNewTetrimino,
+    playBlockLockSound,
   ]);
 
   // Handle automatic drop
@@ -286,15 +296,17 @@ export function Game() {
       pauseGame();
     }
     else if (status === 'paused') {
+      void initializeAudio('playing');
       resumeGame();
     }
-  }, [status, pauseGame, resumeGame]);
+  }, [status, pauseGame, resumeGame, initializeAudio]);
 
   const handleStart = useCallback(() => {
     generatorRef.current = createRandomGenerator();
+    void initializeAudio('playing');
     startGame();
     spawnNewTetrimino();
-  }, [startGame, spawnNewTetrimino]);
+  }, [startGame, spawnNewTetrimino, initializeAudio]);
 
   const handleReset = useCallback(() => {
     generatorRef.current = createRandomGenerator();
@@ -351,8 +363,8 @@ export function Game() {
           <ControlPanel
             gameStatus={status}
             onStart={handleStart}
-            onPause={pauseGame}
-            onResume={resumeGame}
+            onPause={handlePause}
+            onResume={handlePause}
             onReset={handleReset}
           />
         </div>
