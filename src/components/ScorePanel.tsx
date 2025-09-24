@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "./ScorePanel.module.css";
+import React from 'react';
+import styles from './ScorePanel.module.css';
 
 interface ScorePanelProps {
   score: number;

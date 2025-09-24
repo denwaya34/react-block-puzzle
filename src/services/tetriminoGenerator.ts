@@ -1,8 +1,8 @@
-import type { Board, Position } from "@/types/board";
-import { BOARD_WIDTH, BOARD_HEIGHT } from "@/types/board";
-import type { Tetrimino, TetriminoType } from "@/types/tetrimino";
-import { TETRIMINOS } from "@/types/tetrimino";
-import { isValidPosition } from "./collisionDetector";
+import type { Board, Position } from '@/types/board';
+import { BOARD_WIDTH, BOARD_HEIGHT } from '@/types/board';
+import type { Tetrimino, TetriminoType } from '@/types/tetrimino';
+import { TETRIMINOS } from '@/types/tetrimino';
+import { isValidPosition } from './collisionDetector';
 
 /**
  * Simple seedable random number generator
@@ -34,7 +34,7 @@ export interface TetriminoGenerator {
  */
 export function createRandomGenerator(seed?: number): TetriminoGenerator {
   const random = new SeededRandom(seed);
-  const types: TetriminoType[] = ["I", "O", "T", "S", "Z", "J", "L"];
+  const types: TetriminoType[] = ['I', 'O', 'T', 'S', 'Z', 'J', 'L'];
   let nextTetrimino: Tetrimino | null = null;
 
   const generateTetrimino = (): Tetrimino => {
@@ -96,7 +96,7 @@ export function placeTetriminoOnBoard(
   position: Position,
 ): Board {
   // Create a copy of the board
-  const newBoard = board.map((row) => row.map((cell) => ({ ...cell })));
+  const newBoard = board.map(row => row.map(cell => ({ ...cell })));
 
   // Place the tetrimino
   for (let y = 0; y < tetrimino.shape.length; y++) {
@@ -106,10 +106,10 @@ export function placeTetriminoOnBoard(
         const boardX = position.x + x;
 
         if (
-          boardY >= 0 &&
-          boardY < BOARD_HEIGHT &&
-          boardX >= 0 &&
-          boardX < BOARD_WIDTH
+          boardY >= 0
+          && boardY < BOARD_HEIGHT
+          && boardX >= 0
+          && boardX < BOARD_WIDTH
         ) {
           newBoard[boardY][boardX] = {
             filled: true,

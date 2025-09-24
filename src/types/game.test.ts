@@ -1,14 +1,14 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from 'vitest';
 import {
   GameStatus,
   GameState,
   GameMetrics,
   createInitialGameState,
   getDropInterval,
-} from "./game";
+} from './game';
 
-describe("Game State", () => {
-  it("should create initial game state", () => {
+describe('Game State', () => {
+  it('should create initial game state', () => {
     const state = createInitialGameState();
 
     expect(state.board).toBeDefined();
@@ -18,11 +18,11 @@ describe("Game State", () => {
     expect(state.score).toBe(0);
     expect(state.level).toBe(1);
     expect(state.lines).toBe(0);
-    expect(state.gameStatus).toBe("idle");
+    expect(state.gameStatus).toBe('idle');
   });
 
-  it("should have correct game status types", () => {
-    const statuses: GameStatus[] = ["idle", "playing", "paused", "gameOver"];
+  it('should have correct game status types', () => {
+    const statuses: GameStatus[] = ['idle', 'playing', 'paused', 'gameOver'];
     statuses.forEach((status) => {
       const state: GameState = {
         board: [],
@@ -39,8 +39,8 @@ describe("Game State", () => {
   });
 });
 
-describe("Game Metrics", () => {
-  it("should track game metrics", () => {
+describe('Game Metrics', () => {
+  it('should track game metrics', () => {
     const metrics: GameMetrics = {
       score: 1000,
       level: 5,
@@ -54,7 +54,7 @@ describe("Game Metrics", () => {
     expect(metrics.dropInterval).toBe(500);
   });
 
-  it("should calculate drop interval based on level", () => {
+  it('should calculate drop interval based on level', () => {
     expect(getDropInterval(1)).toBe(1000);
     expect(getDropInterval(2)).toBe(900);
     expect(getDropInterval(5)).toBe(600);

@@ -1,5 +1,5 @@
-import type { Board } from "@/types/board";
-import { BOARD_WIDTH, BOARD_HEIGHT } from "@/types/board";
+import type { Board } from '@/types/board';
+import { BOARD_WIDTH, BOARD_HEIGHT } from '@/types/board';
 
 /**
  * Find all completed (filled) lines in the board
@@ -8,7 +8,7 @@ export function findCompletedLines(board: Board): number[] {
   const completedLines: number[] = [];
 
   for (let y = 0; y < BOARD_HEIGHT; y++) {
-    const isLineComplete = board[y].every((cell) => cell.filled);
+    const isLineComplete = board[y].every(cell => cell.filled);
     if (isLineComplete) {
       completedLines.push(y);
     }
@@ -48,7 +48,7 @@ export function clearLines(board: Board, linesToClear: number[]): Board {
  * Calculate score based on number of lines cleared and current level
  */
 export function calculateScore(linesCleared: number, level: number): number {
-  const baseScores: { [key: number]: number } = {
+  const baseScores: Record<number, number> = {
     1: 100, // Single
     2: 300, // Double
     3: 500, // Triple

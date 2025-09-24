@@ -1,9 +1,9 @@
-import type { Board, Position } from "@/types/board";
-import type { Tetrimino, TetriminoType } from "@/types/tetrimino";
-import { rotateTetrimino } from "@/types/tetrimino";
-import { isValidPosition } from "./collisionDetector";
+import type { Board, Position } from '@/types/board';
+import type { Tetrimino, TetriminoType } from '@/types/tetrimino';
+import { rotateTetrimino } from '@/types/tetrimino';
+import { isValidPosition } from './collisionDetector';
 
-export type Direction = "left" | "right" | "down";
+export type Direction = 'left' | 'right' | 'down';
 
 export interface MoveResult {
   success: boolean;
@@ -52,13 +52,13 @@ export function tryMove(
   const newPosition = { ...currentPosition };
 
   switch (direction) {
-    case "left":
+    case 'left':
       newPosition.x--;
       break;
-    case "right":
+    case 'right':
       newPosition.x++;
       break;
-    case "down":
+    case 'down':
       newPosition.y++;
       break;
   }
@@ -86,12 +86,12 @@ export function performWallKick(
   tetriminoType: TetriminoType,
 ): Position | null {
   // O tetrimino doesn't need wall kicks
-  if (tetriminoType === "O") {
+  if (tetriminoType === 'O') {
     return position;
   }
 
   // Choose appropriate kick data
-  const kicks = tetriminoType === "I" ? I_WALL_KICKS : STANDARD_WALL_KICKS;
+  const kicks = tetriminoType === 'I' ? I_WALL_KICKS : STANDARD_WALL_KICKS;
 
   // Try each kick offset
   for (const kick of kicks) {
@@ -117,7 +117,7 @@ export function tryRotateWithKick(
   position: Position,
 ): RotateResult {
   // Special case for O tetrimino - it doesn't change when rotated
-  if (tetrimino.type === "O") {
+  if (tetrimino.type === 'O') {
     return {
       success: true,
       tetrimino,

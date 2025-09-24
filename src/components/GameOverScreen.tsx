@@ -1,4 +1,4 @@
-import styles from "./GameOverScreen.module.css";
+import styles from './GameOverScreen.module.css';
 
 interface GameOverScreenProps {
   isGameOver: boolean;

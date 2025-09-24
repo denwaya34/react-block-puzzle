@@ -1,14 +1,14 @@
-import { describe, it, expect } from "vitest";
-import * as fs from "fs";
-import * as path from "path";
+import { describe, it, expect } from 'vitest';
+import * as fs from 'fs';
+import * as path from 'path';
 
-describe("Project Structure", () => {
+describe('Project Structure', () => {
   const directories = [
-    "src/components",
-    "src/hooks",
-    "src/services",
-    "src/utils",
-    "src/types",
+    'src/components',
+    'src/hooks',
+    'src/services',
+    'src/utils',
+    'src/types',
   ];
 
   directories.forEach((dir) => {
@@ -18,7 +18,7 @@ describe("Project Structure", () => {
     });
 
     it(`should have index.ts in ${dir}`, () => {
-      const indexPath = path.resolve(process.cwd(), dir, "index.ts");
+      const indexPath = path.resolve(process.cwd(), dir, 'index.ts');
       expect(fs.existsSync(indexPath)).toBe(true);
     });
   });

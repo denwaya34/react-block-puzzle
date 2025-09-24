@@ -1,8 +1,8 @@
-import React from "react";
-import type { Board, Position } from "@/types/board";
-import { BOARD_WIDTH, BOARD_HEIGHT } from "@/types/board";
-import type { Tetrimino } from "@/types/tetrimino";
-import styles from "./GameBoard.module.css";
+import React from 'react';
+import type { Board, Position } from '@/types/board';
+import { BOARD_WIDTH, BOARD_HEIGHT } from '@/types/board';
+import type { Tetrimino } from '@/types/tetrimino';
+import styles from './GameBoard.module.css';
 
 interface GameBoardProps {
   board: Board;
@@ -25,11 +25,11 @@ export const GameBoard = React.memo(function GameBoard({
       const relX = col - currentPosition.x;
 
       if (
-        relY >= 0 &&
-        relY < currentTetrimino.shape.length &&
-        relX >= 0 &&
-        relX < currentTetrimino.shape[0].length &&
-        currentTetrimino.shape[relY][relX]
+        relY >= 0
+        && relY < currentTetrimino.shape.length
+        && relX >= 0
+        && relX < currentTetrimino.shape[0].length
+        && currentTetrimino.shape[relY][relX]
       ) {
         return {
           filled: true,
@@ -54,21 +54,21 @@ export const GameBoard = React.memo(function GameBoard({
         return (
           <div
             key={row}
-            className={`${styles.row} row ${isClearing ? styles.clearing : ""}`}
+            className={`${styles.row} row ${isClearing ? styles.clearing : ''}`}
           >
             {Array.from({ length: BOARD_WIDTH }).map((_, col) => {
               const cellState = getCellState(row, col);
               const classNames = [
                 styles.cell,
-                "cell",
+                'cell',
                 cellState.filled ? styles.filled : styles.empty,
-                cellState.filled ? "filled" : "empty",
-                cellState.isPreview ? styles.preview : "",
-                cellState.isPreview ? "preview" : "",
-                isClearing ? styles.clearingCell : "",
+                cellState.filled ? 'filled' : 'empty',
+                cellState.isPreview ? styles.preview : '',
+                cellState.isPreview ? 'preview' : '',
+                isClearing ? styles.clearingCell : '',
               ]
                 .filter(Boolean)
-                .join(" ");
+                .join(' ');
 
               return (
                 <div

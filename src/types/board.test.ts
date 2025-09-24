@@ -1,19 +1,19 @@
-import { describe, it, expect } from "vitest";
-import { Cell, Position, createEmptyBoard, BOARD_WIDTH, BOARD_HEIGHT } from "./board";
+import { describe, it, expect } from 'vitest';
+import { Cell, Position, createEmptyBoard, BOARD_WIDTH, BOARD_HEIGHT } from './board';
 
-describe("Board Types", () => {
-  it("should define board dimensions correctly", () => {
+describe('Board Types', () => {
+  it('should define board dimensions correctly', () => {
     expect(BOARD_WIDTH).toBe(10);
     expect(BOARD_HEIGHT).toBe(20);
   });
 
-  it("should create an empty board with correct dimensions", () => {
+  it('should create an empty board with correct dimensions', () => {
     const board = createEmptyBoard();
     expect(board).toHaveLength(BOARD_HEIGHT);
     expect(board[0]).toHaveLength(BOARD_WIDTH);
   });
 
-  it("should initialize all cells as empty", () => {
+  it('should initialize all cells as empty', () => {
     const board = createEmptyBoard();
     board.forEach((row) => {
       row.forEach((cell) => {
@@ -24,8 +24,8 @@ describe("Board Types", () => {
   });
 });
 
-describe("Cell Type", () => {
-  it("should create an empty cell", () => {
+describe('Cell Type', () => {
+  it('should create an empty cell', () => {
     const cell: Cell = {
       filled: false,
       color: null,
@@ -34,18 +34,18 @@ describe("Cell Type", () => {
     expect(cell.color).toBe(null);
   });
 
-  it("should create a filled cell with color", () => {
+  it('should create a filled cell with color', () => {
     const cell: Cell = {
       filled: true,
-      color: "#FF0000",
+      color: '#FF0000',
     };
     expect(cell.filled).toBe(true);
-    expect(cell.color).toBe("#FF0000");
+    expect(cell.color).toBe('#FF0000');
   });
 });
 
-describe("Position Type", () => {
-  it("should create a position", () => {
+describe('Position Type', () => {
+  it('should create a position', () => {
     const pos: Position = {
       x: 5,
       y: 10,
@@ -54,7 +54,7 @@ describe("Position Type", () => {
     expect(pos.y).toBe(10);
   });
 
-  it("should handle board boundaries", () => {
+  it('should handle board boundaries', () => {
     const topLeft: Position = { x: 0, y: 0 };
     const bottomRight: Position = { x: BOARD_WIDTH - 1, y: BOARD_HEIGHT - 1 };
 

@@ -1,9 +1,9 @@
-import { describe, it, expect, vi } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
-import { GameOverScreen } from "./GameOverScreen";
+import { describe, it, expect, vi } from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { GameOverScreen } from './GameOverScreen';
 
-describe("GameOverScreen", () => {
-  it("should not render when game is not over", () => {
+describe('GameOverScreen', () => {
+  it('should not render when game is not over', () => {
     const { container } = render(
       <GameOverScreen
         isGameOver={false}
@@ -14,11 +14,11 @@ describe("GameOverScreen", () => {
       />,
     );
 
-    const overlay = container.querySelector(".overlay");
+    const overlay = container.querySelector('.overlay');
     expect(overlay).toBeNull();
   });
 
-  it("should render overlay when game is over", () => {
+  it('should render overlay when game is over', () => {
     const { container } = render(
       <GameOverScreen
         isGameOver={true}
@@ -29,11 +29,11 @@ describe("GameOverScreen", () => {
       />,
     );
 
-    const overlay = container.querySelector(".overlay");
+    const overlay = container.querySelector('.overlay');
     expect(overlay).toBeTruthy();
   });
 
-  it("should display game over message", () => {
+  it('should display game over message', () => {
     render(
       <GameOverScreen
         isGameOver={true}
@@ -44,10 +44,10 @@ describe("GameOverScreen", () => {
       />,
     );
 
-    expect(screen.getByText("Game Over")).toBeInTheDocument();
+    expect(screen.getByText('Game Over')).toBeInTheDocument();
   });
 
-  it("should display final score", () => {
+  it('should display final score', () => {
     render(
       <GameOverScreen
         isGameOver={true}
@@ -58,11 +58,11 @@ describe("GameOverScreen", () => {
       />,
     );
 
-    expect(screen.getByText("Final Score")).toBeInTheDocument();
-    expect(screen.getByText("12,345")).toBeInTheDocument();
+    expect(screen.getByText('Final Score')).toBeInTheDocument();
+    expect(screen.getByText('12,345')).toBeInTheDocument();
   });
 
-  it("should display level reached", () => {
+  it('should display level reached', () => {
     render(
       <GameOverScreen
         isGameOver={true}
@@ -73,11 +73,11 @@ describe("GameOverScreen", () => {
       />,
     );
 
-    expect(screen.getByText("Level")).toBeInTheDocument();
-    expect(screen.getByText("7")).toBeInTheDocument();
+    expect(screen.getByText('Level')).toBeInTheDocument();
+    expect(screen.getByText('7')).toBeInTheDocument();
   });
 
-  it("should display lines cleared", () => {
+  it('should display lines cleared', () => {
     render(
       <GameOverScreen
         isGameOver={true}
@@ -88,11 +88,11 @@ describe("GameOverScreen", () => {
       />,
     );
 
-    expect(screen.getByText("Lines")).toBeInTheDocument();
-    expect(screen.getByText("123")).toBeInTheDocument();
+    expect(screen.getByText('Lines')).toBeInTheDocument();
+    expect(screen.getByText('123')).toBeInTheDocument();
   });
 
-  it("should show new game button", () => {
+  it('should show new game button', () => {
     render(
       <GameOverScreen
         isGameOver={true}
@@ -103,10 +103,10 @@ describe("GameOverScreen", () => {
       />,
     );
 
-    expect(screen.getByText("New Game")).toBeInTheDocument();
+    expect(screen.getByText('New Game')).toBeInTheDocument();
   });
 
-  it("should call onNewGame when button is clicked", () => {
+  it('should call onNewGame when button is clicked', () => {
     const onNewGame = vi.fn();
     render(
       <GameOverScreen
@@ -118,11 +118,11 @@ describe("GameOverScreen", () => {
       />,
     );
 
-    fireEvent.click(screen.getByText("New Game"));
+    fireEvent.click(screen.getByText('New Game'));
     expect(onNewGame).toHaveBeenCalled();
   });
 
-  it("should format large scores with commas", () => {
+  it('should format large scores with commas', () => {
     render(
       <GameOverScreen
         isGameOver={true}
@@ -133,10 +133,10 @@ describe("GameOverScreen", () => {
       />,
     );
 
-    expect(screen.getByText("1,234,567")).toBeInTheDocument();
+    expect(screen.getByText('1,234,567')).toBeInTheDocument();
   });
 
-  it("should have dark overlay background", () => {
+  it('should have dark overlay background', () => {
     const { container } = render(
       <GameOverScreen
         isGameOver={true}
@@ -147,12 +147,12 @@ describe("GameOverScreen", () => {
       />,
     );
 
-    const overlay = container.querySelector(".overlay");
+    const overlay = container.querySelector('.overlay');
     expect(overlay).toBeTruthy();
-    expect(overlay?.classList.contains("overlay")).toBe(true);
+    expect(overlay?.classList.contains('overlay')).toBe(true);
   });
 
-  it("should center content in overlay", () => {
+  it('should center content in overlay', () => {
     const { container } = render(
       <GameOverScreen
         isGameOver={true}
@@ -163,7 +163,7 @@ describe("GameOverScreen", () => {
       />,
     );
 
-    const content = container.querySelector(".content");
+    const content = container.querySelector('.content');
     expect(content).toBeTruthy();
   });
 });

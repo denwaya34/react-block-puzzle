@@ -1,9 +1,9 @@
-import { describe, it, expect, vi } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
-import { ControlPanel } from "./ControlPanel";
+import { describe, it, expect, vi } from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { ControlPanel } from './ControlPanel';
 
-describe("ControlPanel", () => {
-  it("should show start button when game is idle", () => {
+describe('ControlPanel', () => {
+  it('should show start button when game is idle', () => {
     render(
       <ControlPanel
         gameStatus="idle"
@@ -14,10 +14,10 @@ describe("ControlPanel", () => {
       />,
     );
 
-    expect(screen.getByText("Start Game")).toBeInTheDocument();
+    expect(screen.getByText('Start Game')).toBeInTheDocument();
   });
 
-  it("should show pause button when game is playing", () => {
+  it('should show pause button when game is playing', () => {
     render(
       <ControlPanel
         gameStatus="playing"
@@ -28,10 +28,10 @@ describe("ControlPanel", () => {
       />,
     );
 
-    expect(screen.getByRole("button", { name: "Pause" })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Pause' })).toBeInTheDocument();
   });
 
-  it("should show resume button when game is paused", () => {
+  it('should show resume button when game is paused', () => {
     render(
       <ControlPanel
         gameStatus="paused"
@@ -42,10 +42,10 @@ describe("ControlPanel", () => {
       />,
     );
 
-    expect(screen.getByText("Resume")).toBeInTheDocument();
+    expect(screen.getByText('Resume')).toBeInTheDocument();
   });
 
-  it("should show reset button when game is over", () => {
+  it('should show reset button when game is over', () => {
     render(
       <ControlPanel
         gameStatus="gameOver"
@@ -56,10 +56,10 @@ describe("ControlPanel", () => {
       />,
     );
 
-    expect(screen.getByText("New Game")).toBeInTheDocument();
+    expect(screen.getByText('New Game')).toBeInTheDocument();
   });
 
-  it("should call onStart when start button is clicked", () => {
+  it('should call onStart when start button is clicked', () => {
     const onStart = vi.fn();
     render(
       <ControlPanel
@@ -71,11 +71,11 @@ describe("ControlPanel", () => {
       />,
     );
 
-    fireEvent.click(screen.getByText("Start Game"));
+    fireEvent.click(screen.getByText('Start Game'));
     expect(onStart).toHaveBeenCalled();
   });
 
-  it("should call onPause when pause button is clicked", () => {
+  it('should call onPause when pause button is clicked', () => {
     const onPause = vi.fn();
     render(
       <ControlPanel
@@ -87,11 +87,11 @@ describe("ControlPanel", () => {
       />,
     );
 
-    fireEvent.click(screen.getByRole("button", { name: "Pause" }));
+    fireEvent.click(screen.getByRole('button', { name: 'Pause' }));
     expect(onPause).toHaveBeenCalled();
   });
 
-  it("should call onResume when resume button is clicked", () => {
+  it('should call onResume when resume button is clicked', () => {
     const onResume = vi.fn();
     render(
       <ControlPanel
@@ -103,11 +103,11 @@ describe("ControlPanel", () => {
       />,
     );
 
-    fireEvent.click(screen.getByText("Resume"));
+    fireEvent.click(screen.getByText('Resume'));
     expect(onResume).toHaveBeenCalled();
   });
 
-  it("should call onReset when reset button is clicked", () => {
+  it('should call onReset when reset button is clicked', () => {
     const onReset = vi.fn();
     render(
       <ControlPanel
@@ -119,11 +119,11 @@ describe("ControlPanel", () => {
       />,
     );
 
-    fireEvent.click(screen.getByText("Reset"));
+    fireEvent.click(screen.getByText('Reset'));
     expect(onReset).toHaveBeenCalled();
   });
 
-  it("should always show reset button except in idle state", () => {
+  it('should always show reset button except in idle state', () => {
     const { rerender } = render(
       <ControlPanel
         gameStatus="playing"
@@ -134,7 +134,7 @@ describe("ControlPanel", () => {
       />,
     );
 
-    expect(screen.getByText("Reset")).toBeInTheDocument();
+    expect(screen.getByText('Reset')).toBeInTheDocument();
 
     rerender(
       <ControlPanel
@@ -146,10 +146,10 @@ describe("ControlPanel", () => {
       />,
     );
 
-    expect(screen.getByText("Reset")).toBeInTheDocument();
+    expect(screen.getByText('Reset')).toBeInTheDocument();
   });
 
-  it("should display game status indicator", () => {
+  it('should display game status indicator', () => {
     const { rerender } = render(
       <ControlPanel
         gameStatus="playing"
@@ -160,7 +160,7 @@ describe("ControlPanel", () => {
       />,
     );
 
-    expect(screen.getByText("Playing")).toBeInTheDocument();
+    expect(screen.getByText('Playing')).toBeInTheDocument();
 
     rerender(
       <ControlPanel
@@ -172,10 +172,10 @@ describe("ControlPanel", () => {
       />,
     );
 
-    expect(screen.getByText("Paused")).toBeInTheDocument();
+    expect(screen.getByText('Paused')).toBeInTheDocument();
   });
 
-  it("should show keyboard shortcuts hint", () => {
+  it('should show keyboard shortcuts hint', () => {
     render(
       <ControlPanel
         gameStatus="idle"
@@ -186,8 +186,8 @@ describe("ControlPanel", () => {
       />,
     );
 
-    expect(screen.getByText("ESC")).toBeInTheDocument();
-    const pauseLabels = screen.getAllByText("Pause");
+    expect(screen.getByText('ESC')).toBeInTheDocument();
+    const pauseLabels = screen.getAllByText('Pause');
     expect(pauseLabels.length).toBeGreaterThan(0);
   });
 });

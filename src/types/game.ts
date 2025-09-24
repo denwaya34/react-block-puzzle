@@ -1,7 +1,7 @@
-import { Board, Position, createEmptyBoard } from "./board";
-import { Tetrimino, TetriminoType, TETRIMINOS } from "./tetrimino";
+import { Board, Position, createEmptyBoard } from './board';
+import { Tetrimino, TetriminoType, TETRIMINOS } from './tetrimino';
 
-export type GameStatus = "idle" | "playing" | "paused" | "gameOver";
+export type GameStatus = 'idle' | 'playing' | 'paused' | 'gameOver';
 
 export interface GameState {
   board: Board;
@@ -23,7 +23,7 @@ export interface GameMetrics {
 
 // Get a random tetrimino
 export function getRandomTetrimino(): Tetrimino {
-  const types: TetriminoType[] = ["I", "O", "T", "S", "Z", "J", "L"];
+  const types: TetriminoType[] = ['I', 'O', 'T', 'S', 'Z', 'J', 'L'];
   const randomType = types[Math.floor(Math.random() * types.length)];
   return { ...TETRIMINOS[randomType] };
 }
@@ -48,6 +48,6 @@ export function createInitialGameState(): GameState {
     score: 0,
     level: 1,
     lines: 0,
-    gameStatus: "idle",
+    gameStatus: 'idle',
   };
 }

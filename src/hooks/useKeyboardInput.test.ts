@@ -1,25 +1,26 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { renderHook, act } from "@testing-library/react";
-import { useKeyboardInput } from "./useKeyboardInput";
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { renderHook, act } from '@testing-library/react';
+import { useKeyboardInput } from './useKeyboardInput';
 
-describe("useKeyboardInput", () => {
+describe('useKeyboardInput', () => {
   let keydownHandler: ((event: KeyboardEvent) => void) | null = null;
   let keyupHandler: ((event: KeyboardEvent) => void) | null = null;
 
   beforeEach(() => {
     // Mock addEventListener
-    vi.spyOn(window, "addEventListener").mockImplementation(
+    vi.spyOn(window, 'addEventListener').mockImplementation(
       (event, handler) => {
-        if (event === "keydown") {
+        if (event === 'keydown') {
           keydownHandler = handler as (event: KeyboardEvent) => void;
-        } else if (event === "keyup") {
+        }
+        else if (event === 'keyup') {
           keyupHandler = handler as (event: KeyboardEvent) => void;
         }
       },
     );
 
     // Mock removeEventListener
-    vi.spyOn(window, "removeEventListener");
+    vi.spyOn(window, 'removeEventListener');
   });
 
   afterEach(() => {
@@ -28,132 +29,138 @@ describe("useKeyboardInput", () => {
     keyupHandler = null;
   });
 
-  it("should register event listeners on mount", () => {
-    renderHook(() => useKeyboardInput());
+  it('should register event listeners on mount', () => {
+    renderHook(() => { useKeyboardInput(); });
 
     expect(window.addEventListener).toHaveBeenCalledWith(
-      "keydown",
+      'keydown',
       expect.any(Function),
     );
     expect(window.addEventListener).toHaveBeenCalledWith(
-      "keyup",
+      'keyup',
       expect.any(Function),
     );
   });
 
-  it("should remove event listeners on unmount", () => {
-    const { unmount } = renderHook(() => useKeyboardInput());
+  it('should remove event listeners on unmount', () => {
+    const { unmount } = renderHook(() => { useKeyboardInput(); });
 
     unmount();
 
     expect(window.removeEventListener).toHaveBeenCalledWith(
-      "keydown",
+      'keydown',
       expect.any(Function),
     );
     expect(window.removeEventListener).toHaveBeenCalledWith(
-      "keyup",
+      'keyup',
       expect.any(Function),
     );
   });
 
-  it("should handle left arrow key", () => {
+  it('should handle left arrow key', () => {
     const onMoveLeft = vi.fn();
-    renderHook(() =>
+    renderHook(() => {
       useKeyboardInput({
         onMoveLeft,
         enabled: true,
-      }),
+      });
+    },
     );
 
     act(() => {
-      keydownHandler?.(new KeyboardEvent("keydown", { key: "ArrowLeft" }));
+      keydownHandler?.(new KeyboardEvent('keydown', { key: 'ArrowLeft' }));
     });
 
     expect(onMoveLeft).toHaveBeenCalled();
   });
 
-  it("should handle right arrow key", () => {
+  it('should handle right arrow key', () => {
     const onMoveRight = vi.fn();
-    renderHook(() =>
+    renderHook(() => {
       useKeyboardInput({
         onMoveRight,
         enabled: true,
-      }),
+      });
+    },
     );
 
     act(() => {
-      keydownHandler?.(new KeyboardEvent("keydown", { key: "ArrowRight" }));
+      keydownHandler?.(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
     });
 
     expect(onMoveRight).toHaveBeenCalled();
   });
 
-  it("should handle down arrow key for soft drop", () => {
+  it('should handle down arrow key for soft drop', () => {
     const onSoftDrop = vi.fn();
-    renderHook(() =>
+    renderHook(() => {
       useKeyboardInput({
         onSoftDrop,
         enabled: true,
-      }),
+      });
+    },
     );
 
     act(() => {
-      keydownHandler?.(new KeyboardEvent("keydown", { key: "ArrowDown" }));
+      keydownHandler?.(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
     });
 
     expect(onSoftDrop).toHaveBeenCalled();
   });
 
-  it("should handle up arrow key for rotation", () => {
+  it('should handle up arrow key for rotation', () => {
     const onRotate = vi.fn();
-    renderHook(() =>
+    renderHook(() => {
       useKeyboardInput({
         onRotate,
         enabled: true,
-      }),
+      });
+    },
     );
 
     act(() => {
-      keydownHandler?.(new KeyboardEvent("keydown", { key: "ArrowUp" }));
+      keydownHandler?.(new KeyboardEvent('keydown', { key: 'ArrowUp' }));
     });
 
     expect(onRotate).toHaveBeenCalled();
   });
 
-  it("should handle Escape key for pause", () => {
+  it('should handle Escape key for pause', () => {
     const onPause = vi.fn();
-    renderHook(() =>
+    renderHook(() => {
       useKeyboardInput({
         onPause,
         enabled: true,
-      }),
+      });
+    },
     );
 
     act(() => {
-      keydownHandler?.(new KeyboardEvent("keydown", { key: "Escape" }));
+      keydownHandler?.(new KeyboardEvent('keydown', { key: 'Escape' }));
     });
 
     expect(onPause).toHaveBeenCalled();
   });
 
-  it("should not trigger callbacks when disabled", () => {
+  it('should not trigger callbacks when disabled', () => {
     const onMoveLeft = vi.fn();
     const onMoveRight = vi.fn();
     const onRotate = vi.fn();
 
-    renderHook(() =>
+    renderHook(() => {
       useKeyboardInput({
         onMoveLeft,
         onMoveRight,
         onRotate,
         enabled: false,
-      }),
+      });
+    },
     );
 
     act(() => {
-      keydownHandler?.(new KeyboardEvent("keydown", { key: "ArrowLeft" }));
-      keydownHandler?.(new KeyboardEvent("keydown", { key: "ArrowRight" }));
-      keydownHandler?.(new KeyboardEvent("keydown", { key: "ArrowUp" }));
+      keydownHandler?.(new KeyboardEvent('keydown', { key: 'ArrowLeft' }));
+      keydownHandler?.(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
+      keydownHandler?.(new KeyboardEvent('keydown', { key: 'ArrowUp' }));
     });
 
     expect(onMoveLeft).not.toHaveBeenCalled();
@@ -161,22 +168,23 @@ describe("useKeyboardInput", () => {
     expect(onRotate).not.toHaveBeenCalled();
   });
 
-  it("should handle key repeat for movement", () => {
+  it('should handle key repeat for movement', () => {
     vi.useFakeTimers();
     const onMoveLeft = vi.fn();
 
-    renderHook(() =>
+    renderHook(() => {
       useKeyboardInput({
         onMoveLeft,
         enabled: true,
         repeatDelay: 300,
         repeatInterval: 50,
-      }),
+      });
+    },
     );
 
     // Press and hold left arrow
     act(() => {
-      keydownHandler?.(new KeyboardEvent("keydown", { key: "ArrowLeft" }));
+      keydownHandler?.(new KeyboardEvent('keydown', { key: 'ArrowLeft' }));
     });
 
     expect(onMoveLeft).toHaveBeenCalledTimes(1);
@@ -195,7 +203,7 @@ describe("useKeyboardInput", () => {
 
     // Release key
     act(() => {
-      keyupHandler?.(new KeyboardEvent("keyup", { key: "ArrowLeft" }));
+      keyupHandler?.(new KeyboardEvent('keyup', { key: 'ArrowLeft' }));
     });
 
     // Should stop repeating
@@ -208,42 +216,44 @@ describe("useKeyboardInput", () => {
     vi.useRealTimers();
   });
 
-  it("should stop soft drop on key release", () => {
+  it('should stop soft drop on key release', () => {
     const onSoftDropStart = vi.fn();
     const onSoftDropStop = vi.fn();
 
-    renderHook(() =>
+    renderHook(() => {
       useKeyboardInput({
         onSoftDropStart,
         onSoftDropStop,
         enabled: true,
-      }),
+      });
+    },
     );
 
     // Press down arrow
     act(() => {
-      keydownHandler?.(new KeyboardEvent("keydown", { key: "ArrowDown" }));
+      keydownHandler?.(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
     });
 
     expect(onSoftDropStart).toHaveBeenCalled();
 
     // Release down arrow
     act(() => {
-      keyupHandler?.(new KeyboardEvent("keyup", { key: "ArrowDown" }));
+      keyupHandler?.(new KeyboardEvent('keyup', { key: 'ArrowDown' }));
     });
 
     expect(onSoftDropStop).toHaveBeenCalled();
   });
 
-  it("should prevent default behavior for game keys", () => {
-    renderHook(() =>
+  it('should prevent default behavior for game keys', () => {
+    renderHook(() => {
       useKeyboardInput({
         enabled: true,
-      }),
+      });
+    },
     );
 
-    const event = new KeyboardEvent("keydown", { key: "ArrowDown" });
-    const preventDefaultSpy = vi.spyOn(event, "preventDefault");
+    const event = new KeyboardEvent('keydown', { key: 'ArrowDown' });
+    const preventDefaultSpy = vi.spyOn(event, 'preventDefault');
 
     act(() => {
       keydownHandler?.(event);

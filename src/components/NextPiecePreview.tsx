@@ -1,6 +1,6 @@
-import React from "react";
-import { type Tetrimino } from "@/types/tetrimino";
-import styles from "./NextPiecePreview.module.css";
+import React from 'react';
+import { type Tetrimino } from '@/types/tetrimino';
+import styles from './NextPiecePreview.module.css';
 
 interface NextPiecePreviewProps {
   nextTetrimino: Tetrimino | null;
@@ -30,11 +30,11 @@ export const NextPiecePreview = React.memo(function NextPiecePreview({
     const relX = col - offsetX;
 
     if (
-      relY >= 0 &&
-      relY < shapeHeight &&
-      relX >= 0 &&
-      relX < shapeWidth &&
-      shape[relY][relX]
+      relY >= 0
+      && relY < shapeHeight
+      && relX >= 0
+      && relX < shapeWidth
+      && shape[relY][relX]
     ) {
       return { filled: true, color: nextTetrimino.color };
     }
@@ -52,12 +52,12 @@ export const NextPiecePreview = React.memo(function NextPiecePreview({
               const cellState = getCellState(row, col);
               const classNames = [
                 styles.cell,
-                "cell",
+                'cell',
                 cellState.filled ? styles.filled : styles.empty,
-                cellState.filled ? "filled" : "empty",
+                cellState.filled ? 'filled' : 'empty',
               ]
                 .filter(Boolean)
-                .join(" ");
+                .join(' ');
 
               return (
                 <div

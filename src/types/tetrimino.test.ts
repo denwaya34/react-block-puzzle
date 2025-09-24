@@ -1,20 +1,20 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from 'vitest';
 import {
   type TetriminoType,
   type Tetrimino,
   TETRIMINOS,
   rotateTetrimino,
-} from "./tetrimino";
+} from './tetrimino';
 
-describe("Tetrimino Types", () => {
-  it("should have all 7 standard tetrimino types", () => {
-    const expectedTypes: TetriminoType[] = ["I", "O", "T", "S", "Z", "J", "L"];
+describe('Tetrimino Types', () => {
+  it('should have all 7 standard tetrimino types', () => {
+    const expectedTypes: TetriminoType[] = ['I', 'O', 'T', 'S', 'Z', 'J', 'L'];
     expectedTypes.forEach((type) => {
       expect(TETRIMINOS[type]).toBeDefined();
     });
   });
 
-  it("should have correct shapes for each tetrimino", () => {
+  it('should have correct shapes for each tetrimino', () => {
     // I piece - horizontal line
     expect(TETRIMINOS.I.shape).toEqual([
       [0, 0, 0, 0],
@@ -37,23 +37,23 @@ describe("Tetrimino Types", () => {
     ]);
   });
 
-  it("should have unique colors for each tetrimino", () => {
-    const colors = Object.values(TETRIMINOS).map((t) => t.color);
+  it('should have unique colors for each tetrimino', () => {
+    const colors = Object.values(TETRIMINOS).map(t => t.color);
     const uniqueColors = new Set(colors);
     expect(uniqueColors.size).toBe(colors.length);
   });
 });
 
-describe("Tetrimino Rotation", () => {
-  it("should rotate tetrimino shape 90 degrees clockwise", () => {
+describe('Tetrimino Rotation', () => {
+  it('should rotate tetrimino shape 90 degrees clockwise', () => {
     const tPiece: Tetrimino = {
-      type: "T",
+      type: 'T',
       shape: [
         [0, 1, 0],
         [1, 1, 1],
         [0, 0, 0],
       ],
-      color: "#FF00FF",
+      color: '#FF00FF',
       rotation: 0,
     };
 
@@ -66,7 +66,7 @@ describe("Tetrimino Rotation", () => {
     expect(rotated.rotation).toBe(1);
   });
 
-  it("should handle 4 rotations returning to original", () => {
+  it('should handle 4 rotations returning to original', () => {
     const original = TETRIMINOS.T;
     let rotated = original;
 

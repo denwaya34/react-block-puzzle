@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback } from 'react';
 
 /**
  * Custom hook for managing game loop with start, stop, pause, and resume functionality

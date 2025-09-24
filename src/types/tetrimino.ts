@@ -1,4 +1,4 @@
-export type TetriminoType = "I" | "O" | "T" | "S" | "Z" | "J" | "L";
+export type TetriminoType = 'I' | 'O' | 'T' | 'S' | 'Z' | 'J' | 'L';
 
 export type Rotation = 0 | 1 | 2 | 3;
 
@@ -12,73 +12,73 @@ export interface Tetrimino {
 // Define the 7 standard tetriminos with their shapes and colors
 export const TETRIMINOS: Record<TetriminoType, Tetrimino> = {
   I: {
-    type: "I",
+    type: 'I',
     shape: [
       [0, 0, 0, 0],
       [1, 1, 1, 1],
       [0, 0, 0, 0],
       [0, 0, 0, 0],
     ],
-    color: "#00F0F0", // Cyan
+    color: '#00F0F0', // Cyan
     rotation: 0,
   },
   O: {
-    type: "O",
+    type: 'O',
     shape: [
       [1, 1],
       [1, 1],
     ],
-    color: "#F0F000", // Yellow
+    color: '#F0F000', // Yellow
     rotation: 0,
   },
   T: {
-    type: "T",
+    type: 'T',
     shape: [
       [0, 1, 0],
       [1, 1, 1],
       [0, 0, 0],
     ],
-    color: "#A000F0", // Purple
+    color: '#A000F0', // Purple
     rotation: 0,
   },
   S: {
-    type: "S",
+    type: 'S',
     shape: [
       [0, 1, 1],
       [1, 1, 0],
       [0, 0, 0],
     ],
-    color: "#00F000", // Green
+    color: '#00F000', // Green
     rotation: 0,
   },
   Z: {
-    type: "Z",
+    type: 'Z',
     shape: [
       [1, 1, 0],
       [0, 1, 1],
       [0, 0, 0],
     ],
-    color: "#F00000", // Red
+    color: '#F00000', // Red
     rotation: 0,
   },
   J: {
-    type: "J",
+    type: 'J',
     shape: [
       [1, 0, 0],
       [1, 1, 1],
       [0, 0, 0],
     ],
-    color: "#0000F0", // Blue
+    color: '#0000F0', // Blue
     rotation: 0,
   },
   L: {
-    type: "L",
+    type: 'L',
     shape: [
       [0, 0, 1],
       [1, 1, 1],
       [0, 0, 0],
     ],
-    color: "#F0A000", // Orange
+    color: '#F0A000', // Orange
     rotation: 0,
   },
 };

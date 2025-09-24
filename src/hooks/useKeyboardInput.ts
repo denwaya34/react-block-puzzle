@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback } from 'react';
 
 export interface KeyboardInputOptions {
   enabled?: boolean;
@@ -13,7 +13,7 @@ export interface KeyboardInputOptions {
   repeatInterval?: number;
 }
 
-const GAME_KEYS = ["ArrowLeft", "ArrowRight", "ArrowDown", "ArrowUp", "Escape"];
+const GAME_KEYS = ['ArrowLeft', 'ArrowRight', 'ArrowDown', 'ArrowUp', 'Escape'];
 
 export function useKeyboardInput(options: KeyboardInputOptions = {}) {
   const {
@@ -74,19 +74,19 @@ export function useKeyboardInput(options: KeyboardInputOptions = {}) {
       pressedKeysRef.current.add(key);
 
       switch (key) {
-        case "ArrowLeft":
+        case 'ArrowLeft':
           if (onMoveLeft) {
             startRepeat(onMoveLeft);
           }
           break;
 
-        case "ArrowRight":
+        case 'ArrowRight':
           if (onMoveRight) {
             startRepeat(onMoveRight);
           }
           break;
 
-        case "ArrowDown":
+        case 'ArrowDown':
           if (onSoftDropStart) {
             onSoftDropStart();
           }
@@ -95,11 +95,11 @@ export function useKeyboardInput(options: KeyboardInputOptions = {}) {
           }
           break;
 
-        case "ArrowUp":
+        case 'ArrowUp':
           onRotate?.();
           break;
 
-        case "Escape": // Bug: no handler
+        case 'Escape': // Bug: no handler
           onPause?.();
           break;
       }
@@ -123,11 +123,11 @@ export function useKeyboardInput(options: KeyboardInputOptions = {}) {
       pressedKeysRef.current.delete(key);
 
       switch (key) {
-        case "ArrowLeft":
-        case "ArrowRight":
-        case "ArrowDown":
+        case 'ArrowLeft':
+        case 'ArrowRight':
+        case 'ArrowDown':
           stopRepeat();
-          if (key === "ArrowDown" && onSoftDropStop) {
+          if (key === 'ArrowDown' && onSoftDropStop) {
             onSoftDropStop();
           }
           break;
@@ -137,12 +137,12 @@ export function useKeyboardInput(options: KeyboardInputOptions = {}) {
   );
 
   useEffect(() => {
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
 
     return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
       stopRepeat();
     };
   }, [handleKeyDown, handleKeyUp, stopRepeat]);

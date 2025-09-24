@@ -1,16 +1,16 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from 'vitest';
 import {
   createRandomGenerator,
   getInitialPosition,
   placeTetriminoOnBoard,
   shouldLockTetrimino,
-} from "./tetriminoGenerator";
-import { createEmptyBoard } from "@/types/board";
-import { TETRIMINOS } from "@/types/tetrimino";
+} from './tetriminoGenerator';
+import { createEmptyBoard } from '@/types/board';
+import { TETRIMINOS } from '@/types/tetrimino';
 
-describe("TetriminoGenerator", () => {
-  describe("createRandomGenerator", () => {
-    it("should generate tetriminos from all 7 types", () => {
+describe('TetriminoGenerator', () => {
+  describe('createRandomGenerator', () => {
+    it('should generate tetriminos from all 7 types', () => {
       const generator = createRandomGenerator();
       const types = new Set<string>();
 
@@ -21,16 +21,16 @@ describe("TetriminoGenerator", () => {
       }
 
       expect(types.size).toBe(7);
-      expect(types.has("I")).toBe(true);
-      expect(types.has("O")).toBe(true);
-      expect(types.has("T")).toBe(true);
-      expect(types.has("S")).toBe(true);
-      expect(types.has("Z")).toBe(true);
-      expect(types.has("J")).toBe(true);
-      expect(types.has("L")).toBe(true);
+      expect(types.has('I')).toBe(true);
+      expect(types.has('O')).toBe(true);
+      expect(types.has('T')).toBe(true);
+      expect(types.has('S')).toBe(true);
+      expect(types.has('Z')).toBe(true);
+      expect(types.has('J')).toBe(true);
+      expect(types.has('L')).toBe(true);
     });
 
-    it("should generate different sequences with different seeds", () => {
+    it('should generate different sequences with different seeds', () => {
       const generator1 = createRandomGenerator(12345);
       const generator2 = createRandomGenerator(54321);
 
@@ -47,7 +47,7 @@ describe("TetriminoGenerator", () => {
       expect(sequence1).not.toEqual(sequence2);
     });
 
-    it("should generate the same sequence with the same seed", () => {
+    it('should generate the same sequence with the same seed', () => {
       const generator1 = createRandomGenerator(12345);
       const generator2 = createRandomGenerator(12345);
 
@@ -63,7 +63,7 @@ describe("TetriminoGenerator", () => {
       expect(sequence1).toEqual(sequence2);
     });
 
-    it("should have peek functionality to see next tetrimino without consuming it", () => {
+    it('should have peek functionality to see next tetrimino without consuming it', () => {
       const generator = createRandomGenerator();
 
       const peeked1 = generator.peek();
@@ -75,8 +75,8 @@ describe("TetriminoGenerator", () => {
     });
   });
 
-  describe("getInitialPosition", () => {
-    it("should center I tetrimino correctly", () => {
+  describe('getInitialPosition', () => {
+    it('should center I tetrimino correctly', () => {
       const tetrimino = TETRIMINOS.I;
       const position = getInitialPosition(tetrimino);
 
@@ -85,7 +85,7 @@ describe("TetriminoGenerator", () => {
       expect(position.y).toBe(0);
     });
 
-    it("should center O tetrimino correctly", () => {
+    it('should center O tetrimino correctly', () => {
       const tetrimino = TETRIMINOS.O;
       const position = getInitialPosition(tetrimino);
 
@@ -94,7 +94,7 @@ describe("TetriminoGenerator", () => {
       expect(position.y).toBe(0);
     });
 
-    it("should center T tetrimino correctly", () => {
+    it('should center T tetrimino correctly', () => {
       const tetrimino = TETRIMINOS.T;
       const position = getInitialPosition(tetrimino);
 
@@ -104,7 +104,7 @@ describe("TetriminoGenerator", () => {
       expect(position.y).toBe(0);
     });
 
-    it("should handle tetriminos with empty top rows", () => {
+    it('should handle tetriminos with empty top rows', () => {
       const tetrimino = TETRIMINOS.T;
       const position = getInitialPosition(tetrimino);
 
@@ -113,8 +113,8 @@ describe("TetriminoGenerator", () => {
     });
   });
 
-  describe("placeTetriminoOnBoard", () => {
-    it("should place tetrimino on empty board", () => {
+  describe('placeTetriminoOnBoard', () => {
+    it('should place tetrimino on empty board', () => {
       const board = createEmptyBoard();
       const tetrimino = TETRIMINOS.O;
       const position = { x: 4, y: 0 };
@@ -129,9 +129,9 @@ describe("TetriminoGenerator", () => {
       expect(newBoard[0][4].color).toBe(tetrimino.color);
     });
 
-    it("should not modify original board", () => {
+    it('should not modify original board', () => {
       const board = createEmptyBoard();
-      const originalBoard = board.map((row) => [...row]);
+      const originalBoard = board.map(row => [...row]);
       const tetrimino = TETRIMINOS.I;
       const position = { x: 3, y: 10 };
 
@@ -140,11 +140,11 @@ describe("TetriminoGenerator", () => {
       expect(board).toEqual(originalBoard);
     });
 
-    it("should merge with existing blocks on board", () => {
+    it('should merge with existing blocks on board', () => {
       const board = createEmptyBoard();
       // Place some existing blocks
-      board[19][0] = { filled: true, color: "#FF0000" };
-      board[19][1] = { filled: true, color: "#FF0000" };
+      board[19][0] = { filled: true, color: '#FF0000' };
+      board[19][1] = { filled: true, color: '#FF0000' };
 
       const tetrimino = TETRIMINOS.I;
       const position = { x: 3, y: 18 };
@@ -161,7 +161,7 @@ describe("TetriminoGenerator", () => {
       expect(newBoard[19][6].filled).toBe(true);
     });
 
-    it("should handle placement at board edges", () => {
+    it('should handle placement at board edges', () => {
       const board = createEmptyBoard();
       const tetrimino = TETRIMINOS.I;
       const position = { x: 6, y: 0 }; // Right edge
@@ -176,8 +176,8 @@ describe("TetriminoGenerator", () => {
     });
   });
 
-  describe("shouldLockTetrimino", () => {
-    it("should lock when tetrimino cannot move down", () => {
+  describe('shouldLockTetrimino', () => {
+    it('should lock when tetrimino cannot move down', () => {
       const board = createEmptyBoard();
       const tetrimino = TETRIMINOS.O;
       const position = { x: 4, y: 18 }; // At bottom
@@ -187,11 +187,11 @@ describe("TetriminoGenerator", () => {
       expect(shouldLock).toBe(true);
     });
 
-    it("should lock when tetrimino would collide with existing blocks", () => {
+    it('should lock when tetrimino would collide with existing blocks', () => {
       const board = createEmptyBoard();
       // Place existing blocks
-      board[10][4] = { filled: true, color: "#FF0000" };
-      board[10][5] = { filled: true, color: "#FF0000" };
+      board[10][4] = { filled: true, color: '#FF0000' };
+      board[10][5] = { filled: true, color: '#FF0000' };
 
       const tetrimino = TETRIMINOS.O;
       const position = { x: 4, y: 8 }; // Just above existing blocks
@@ -201,7 +201,7 @@ describe("TetriminoGenerator", () => {
       expect(shouldLock).toBe(true);
     });
 
-    it("should not lock when tetrimino can still move down", () => {
+    it('should not lock when tetrimino can still move down', () => {
       const board = createEmptyBoard();
       const tetrimino = TETRIMINOS.T;
       const position = { x: 4, y: 5 }; // Middle of board
@@ -211,7 +211,7 @@ describe("TetriminoGenerator", () => {
       expect(shouldLock).toBe(false);
     });
 
-    it("should handle I tetrimino at bottom correctly", () => {
+    it('should handle I tetrimino at bottom correctly', () => {
       const board = createEmptyBoard();
       const tetrimino = TETRIMINOS.I;
       const position = { x: 3, y: 18 }; // I piece horizontal at bottom

@@ -1,5 +1,5 @@
-import { GameStatus } from "@/types/game";
-import styles from "./ControlPanel.module.css";
+import { GameStatus } from '@/types/game';
+import styles from './ControlPanel.module.css';
 
 interface ControlPanelProps {
   gameStatus: GameStatus;
@@ -18,11 +18,11 @@ export function ControlPanel({
 }: ControlPanelProps) {
   const getStatusClass = () => {
     switch (gameStatus) {
-      case "playing":
+      case 'playing':
         return styles.statusPlaying;
-      case "paused":
+      case 'paused':
         return styles.statusPaused;
-      case "gameOver":
+      case 'gameOver':
         return styles.statusGameOver;
       default:
         return styles.statusIdle;
@@ -31,14 +31,14 @@ export function ControlPanel({
 
   const getStatusText = () => {
     switch (gameStatus) {
-      case "playing":
-        return "Playing";
-      case "paused":
-        return "Paused";
-      case "gameOver":
-        return "Game Over";
+      case 'playing':
+        return 'Playing';
+      case 'paused':
+        return 'Paused';
+      case 'gameOver':
+        return 'Game Over';
       default:
-        return "Ready";
+        return 'Ready';
     }
   };
 
@@ -50,7 +50,7 @@ export function ControlPanel({
       </div>
 
       <div className={styles.buttons}>
-        {gameStatus === "idle" && (
+        {gameStatus === 'idle' && (
           <button
             className={`${styles.button} ${styles.primaryButton}`}
             onClick={onStart}
@@ -59,7 +59,7 @@ export function ControlPanel({
           </button>
         )}
 
-        {gameStatus === "playing" && (
+        {gameStatus === 'playing' && (
           <button
             className={`${styles.button} ${styles.pauseButton}`}
             onClick={onPause}
@@ -68,7 +68,7 @@ export function ControlPanel({
           </button>
         )}
 
-        {gameStatus === "paused" && (
+        {gameStatus === 'paused' && (
           <button
             className={`${styles.button} ${styles.primaryButton}`}
             onClick={onResume}
@@ -77,7 +77,7 @@ export function ControlPanel({
           </button>
         )}
 
-        {gameStatus === "gameOver" && (
+        {gameStatus === 'gameOver' && (
           <button
             className={`${styles.button} ${styles.primaryButton}`}
             onClick={onReset}
@@ -86,7 +86,7 @@ export function ControlPanel({
           </button>
         )}
 
-        {(gameStatus === "playing" || gameStatus === "paused") && (
+        {(gameStatus === 'playing' || gameStatus === 'paused') && (
           <button
             className={`${styles.button} ${styles.resetButton}`}
             onClick={onReset}

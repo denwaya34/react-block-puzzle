@@ -1,8 +1,8 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { renderHook, act } from "@testing-library/react";
-import { useGameLoop } from "./useGameLoop";
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { renderHook, act } from '@testing-library/react';
+import { useGameLoop } from './useGameLoop';
 
-describe("useGameLoop", () => {
+describe('useGameLoop', () => {
   beforeEach(() => {
     vi.useFakeTimers();
   });
@@ -11,7 +11,7 @@ describe("useGameLoop", () => {
     vi.restoreAllMocks();
   });
 
-  it("should not run when not started", () => {
+  it('should not run when not started', () => {
     const callback = vi.fn();
     renderHook(() => useGameLoop(callback, 1000));
 
@@ -19,7 +19,7 @@ describe("useGameLoop", () => {
     expect(callback).not.toHaveBeenCalled();
   });
 
-  it("should run callback at specified interval when started", () => {
+  it('should run callback at specified interval when started', () => {
     const callback = vi.fn();
     const { result } = renderHook(() => useGameLoop(callback, 1000));
 
@@ -31,7 +31,7 @@ describe("useGameLoop", () => {
     expect(callback).toHaveBeenCalledTimes(3);
   });
 
-  it("should stop running when stopped", () => {
+  it('should stop running when stopped', () => {
     const callback = vi.fn();
     const { result } = renderHook(() => useGameLoop(callback, 1000));
 
@@ -50,7 +50,7 @@ describe("useGameLoop", () => {
     expect(callback).toHaveBeenCalledTimes(2); // Still 2, not 4
   });
 
-  it("should pause and resume correctly", () => {
+  it('should pause and resume correctly', () => {
     const callback = vi.fn();
     const { result } = renderHook(() => useGameLoop(callback, 1000));
 
@@ -76,7 +76,7 @@ describe("useGameLoop", () => {
     expect(callback).toHaveBeenCalledTimes(4); // Resumed, now 4
   });
 
-  it("should track running state", () => {
+  it('should track running state', () => {
     const callback = vi.fn();
     const { result } = renderHook(() => useGameLoop(callback, 1000));
 
@@ -103,7 +103,7 @@ describe("useGameLoop", () => {
     expect(result.current.isRunning).toBe(false);
   });
 
-  it("should handle interval changes", () => {
+  it('should handle interval changes', () => {
     const callback = vi.fn();
     const { result, rerender } = renderHook(
       ({ interval }) => useGameLoop(callback, interval),
