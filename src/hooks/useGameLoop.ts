@@ -5,7 +5,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
  */
 export function useGameLoop(callback: () => void, interval: number) {
   const [isRunning, setIsRunning] = useState(false);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const callbackRef = useRef(callback);
 
   // Update callback ref when it changes

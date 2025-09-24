@@ -102,4 +102,3 @@ export function rotateTetrimino(tetrimino: Tetrimino): Tetrimino {
     rotation: ((tetrimino.rotation + 1) % 4) as Rotation,
   };
 }
-import { Board } from "./board";

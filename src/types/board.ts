@@ -27,4 +27,3 @@ export function createEmptyBoard(): Board {
         })),
     );
 }
-import { Tetrimino } from "./tetrimino";

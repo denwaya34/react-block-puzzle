@@ -38,11 +38,11 @@ export function Game() {
     updateBoard,
   } = useGameState();
 
-  const dropTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const dropTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const generatorRef = useRef(createRandomGenerator());
   const isSoftDroppingRef = useRef(false);
   const [clearingLines, setClearingLines] = React.useState<number[]>([]);
-  const lockTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const lockTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [isGrounded, setIsGrounded] = React.useState(false);
 
   // Spawn new tetrimino
@@ -53,7 +53,7 @@ export function Game() {
     const position = getInitialPosition(currentTetrimino);
 
     // Check game over
-    // if (isGameOver // Bug: no game over check(gameState.board, currentTetrimino)) {
+    if (isGameOver(gameState.board, currentTetrimino)) {
       gameOver();
       return;
     }
@@ -357,7 +357,7 @@ export function Game() {
     <div className={styles.game}>
       <div className={styles.mainArea}>
         <div className={styles.sidePanel}>
-          <NextPiecePreview nextTetrimino={null} // Bug: no preview />
+          <NextPiecePreview nextTetrimino={gameState.nextTetrimino} />
           <ScorePanel
             score={gameState.score}
             level={gameState.level}

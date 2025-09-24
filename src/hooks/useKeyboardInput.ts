@@ -29,8 +29,8 @@ export function useKeyboardInput(options: KeyboardInputOptions = {}) {
     repeatInterval = 30,
   } = options;
 
-  const repeatTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const intervalTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const repeatTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const intervalTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const pressedKeysRef = useRef<Set<string>>(new Set());
 
   const stopRepeat = useCallback(() => {
