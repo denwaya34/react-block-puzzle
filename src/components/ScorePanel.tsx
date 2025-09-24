@@ -13,9 +13,9 @@ export const ScorePanel = React.memo(function ScorePanel({
   lines,
 }: ScorePanelProps) {
   // Format score with thousands separator
-  const formatScore = (value: number): string => {
+  const formatScore = React.useCallback((value: number): string => {
     return value.toLocaleString();
-  };
+  }, []);
 
   // Calculate level progress (lines needed for next level)
   const progressPercentage = React.useMemo(() => {
@@ -42,7 +42,7 @@ export const ScorePanel = React.memo(function ScorePanel({
         <div className={`${styles.progressBar} progressBar`}>
           <div
             className={`${styles.progressFill} progressFill`}
-            style={{ width: `${progressPercentage}%` }}
+            style={{ width: `${String(progressPercentage)}%` }}
           />
         </div>
       </div>

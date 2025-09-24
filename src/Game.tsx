@@ -45,21 +45,33 @@ export function Game() {
   const lockTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [isGrounded, setIsGrounded] = React.useState(false);
 
+  const {
+    board,
+    currentTetrimino,
+    currentPosition,
+    nextTetrimino,
+    status,
+    score,
+    level,
+    lines,
+  } = gameState;
+
+  const isClearingInProgress = clearingLines.length > 0;
+
   // Spawn new tetrimino
   const spawnNewTetrimino = useCallback(() => {
-    const currentTetrimino
-      = gameState.nextTetrimino ?? generatorRef.current.next();
-    const nextTetrimino = generatorRef.current.next();
-    const position = getInitialPosition(currentTetrimino);
+    const activeTetrimino = nextTetrimino ?? generatorRef.current.next();
+    const upcomingTetrimino = generatorRef.current.next();
+    const position = getInitialPosition(activeTetrimino);
 
     // Check game over
-    if (isGameOver(gameState.board, currentTetrimino)) {
+    if (isGameOver(board, activeTetrimino)) {
       gameOver();
       return;
     }
 
-    setCurrentTetrimino(currentTetrimino, position);
-    setNextTetrimino(nextTetrimino);
+    setCurrentTetrimino(activeTetrimino, position);
+    setNextTetrimino(upcomingTetrimino);
     setIsGrounded(false);
 
     // Clear lock timer
@@ -67,23 +79,19 @@ export function Game() {
       clearTimeout(lockTimerRef.current);
       lockTimerRef.current = null;
     }
-  }, [
-    gameState.board,
-    gameState.nextTetrimino,
-    setCurrentTetrimino,
-    setNextTetrimino,
-    gameOver,
-  ]);
+  }, [board, nextTetrimino, setCurrentTetrimino, setNextTetrimino, gameOver]);
 
   // Lock current tetrimino and spawn new one
   const lockTetrimino = useCallback(() => {
-    if (!gameState.currentTetrimino || !gameState.currentPosition) return;
+    if (!currentTetrimino) {
+      return;
+    }
 
     // Place tetrimino on board
     const newBoard = placeTetriminoOnBoard(
-      gameState.board,
-      gameState.currentTetrimino,
-      gameState.currentPosition,
+      board,
+      currentTetrimino,
+      currentPosition,
     );
 
     // Check for completed lines
@@ -97,8 +105,8 @@ export function Game() {
       // After animation, clear lines and continue
       setTimeout(() => {
         const clearedBoard = clearLines(newBoard, completedLines);
-        const score = calculateScore(completedLines.length, gameState.level);
-        updateScore(score, completedLines.length);
+        const earnedScore = calculateScore(completedLines.length, level);
+        updateScore(earnedScore, completedLines.length);
         updateBoard(clearedBoard);
         setClearingLines([]);
         spawnNewTetrimino();
@@ -110,10 +118,10 @@ export function Game() {
       spawnNewTetrimino();
     }
   }, [
-    gameState.board,
-    gameState.currentTetrimino,
-    gameState.currentPosition,
-    gameState.level,
+    board,
+    currentTetrimino,
+    currentPosition,
+    level,
     updateBoard,
     updateScore,
     spawnNewTetrimino,
@@ -121,8 +129,7 @@ export function Game() {
 
   // Handle automatic drop
   const handleAutoDrop = useCallback(() => {
-    const { status, currentTetrimino, currentPosition, board } = gameState;
-    if (status !== 'playing' || !currentTetrimino || clearingLines.length > 0) {
+    if (status !== 'playing' || !currentTetrimino || isClearingInProgress) {
       return;
     }
 
@@ -153,11 +160,11 @@ export function Game() {
       }
     }
   }, [
-    gameState.board,
-    gameState.currentPosition,
-    gameState.currentTetrimino,
-    gameState.status,
-    clearingLines,
+    status,
+    currentTetrimino,
+    currentPosition,
+    board,
+    isClearingInProgress,
     isGrounded,
     lockTetrimino,
     moveTetrimino,
@@ -169,10 +176,10 @@ export function Game() {
       clearInterval(dropTimerRef.current);
     }
 
-    if (gameState.status === 'playing') {
+    if (status === 'playing') {
       const interval = isSoftDroppingRef.current
         ? 50
-        : getDropInterval(gameState.level);
+        : getDropInterval(level);
       dropTimerRef.current = setInterval(handleAutoDrop, interval);
     }
 
@@ -181,24 +188,15 @@ export function Game() {
         clearInterval(dropTimerRef.current);
       }
     };
-  }, [gameState.level, gameState.status, handleAutoDrop]);
+  }, [level, status, handleAutoDrop]);
 
   // Keyboard controls
   const handleMoveLeft = useCallback(() => {
-    const {
-      status,
-      currentTetrimino,
-      currentPosition,
-      board,
-    } = gameState;
-    if (status !== 'playing' || !currentTetrimino || !currentPosition) return;
+    if (status !== 'playing' || !currentTetrimino) {
+      return;
+    }
 
-    const moved = tryMove(
-      board,
-      currentTetrimino,
-      currentPosition,
-      'left',
-    );
+    const moved = tryMove(board, currentTetrimino, currentPosition, 'left');
     if (moved.success) {
       moveTetrimino('left');
       // Reset lock timer if piece is grounded and moves successfully
@@ -211,23 +209,14 @@ export function Game() {
         }, 1000);
       }
     }
-  }, [gameState.board, gameState.currentPosition, gameState.currentTetrimino, gameState.status, isGrounded, lockTetrimino, moveTetrimino]);
+  }, [board, currentPosition, currentTetrimino, status, isGrounded, lockTetrimino, moveTetrimino]);
 
   const handleMoveRight = useCallback(() => {
-    const {
-      status,
-      currentTetrimino,
-      currentPosition,
-      board,
-    } = gameState;
-    if (status !== 'playing' || !currentTetrimino || !currentPosition) return;
+    if (status !== 'playing' || !currentTetrimino) {
+      return;
+    }
 
-    const moved = tryMove(
-      board,
-      currentTetrimino,
-      currentPosition,
-      'right',
-    );
+    const moved = tryMove(board, currentTetrimino, currentPosition, 'right');
     if (moved.success) {
       moveTetrimino('right');
       // Reset lock timer if piece is grounded and moves successfully
@@ -240,16 +229,12 @@ export function Game() {
         }, 1000);
       }
     }
-  }, [gameState.board, gameState.currentPosition, gameState.currentTetrimino, gameState.status, isGrounded, lockTetrimino, moveTetrimino]);
+  }, [board, currentPosition, currentTetrimino, status, isGrounded, lockTetrimino, moveTetrimino]);
 
   const handleRotate = useCallback(() => {
-    const {
-      status,
-      currentTetrimino,
-      currentPosition,
-      board,
-    } = gameState;
-    if (status !== 'playing' || !currentTetrimino || !currentPosition) return;
+    if (status !== 'playing' || !currentTetrimino) {
+      return;
+    }
 
     const result = tryRotateWithKick(board, currentTetrimino, currentPosition);
     if (result.success) {
@@ -262,16 +247,10 @@ export function Game() {
         }, 500);
       }
     }
-  }, [gameState.board, gameState.currentPosition, gameState.currentTetrimino, gameState.status, isGrounded, lockTetrimino, setCurrentTetrimino]);
+  }, [board, currentPosition, currentTetrimino, status, isGrounded, lockTetrimino, setCurrentTetrimino]);
 
   const handleSoftDrop = useCallback(() => {
-    const {
-      status,
-      currentTetrimino,
-      currentPosition,
-      board,
-    } = gameState;
-    if (status !== 'playing' || !currentTetrimino || !currentPosition) return;
+    if (status !== 'playing' || !currentTetrimino) return;
 
     const moved = tryMove(board, currentTetrimino, currentPosition, 'down');
     if (moved.success) {
@@ -292,7 +271,7 @@ export function Game() {
         }, 1000);
       }
     }
-  }, [gameState, moveTetrimino, isGrounded, lockTetrimino]);
+  }, [status, currentTetrimino, currentPosition, board, moveTetrimino, isGrounded, lockTetrimino]);
 
   const handleSoftDropStart = useCallback(() => {
     isSoftDroppingRef.current = true;
@@ -303,13 +282,13 @@ export function Game() {
   }, []);
 
   const handlePause = useCallback(() => {
-    if (gameState.status === 'playing') {
+    if (status === 'playing') {
       pauseGame();
     }
-    else if (gameState.status === 'paused') {
+    else if (status === 'paused') {
       resumeGame();
     }
-  }, [gameState.status, pauseGame, resumeGame]);
+  }, [status, pauseGame, resumeGame]);
 
   const handleStart = useCallback(() => {
     generatorRef.current = createRandomGenerator();
@@ -329,7 +308,7 @@ export function Game() {
   }, [resetGame]);
 
   useKeyboardInput({
-    enabled: gameState.status === 'playing' && clearingLines.length === 0,
+    enabled: status === 'playing' && !isClearingInProgress,
     onMoveLeft: handleMoveLeft,
     onMoveRight: handleMoveRight,
     onRotate: handleRotate,
@@ -352,24 +331,24 @@ export function Game() {
     <div className={styles.game}>
       <div className={styles.mainArea}>
         <div className={styles.sidePanel}>
-          <NextPiecePreview nextTetrimino={gameState.nextTetrimino} />
+          <NextPiecePreview nextTetrimino={nextTetrimino} />
           <ScorePanel
-            score={gameState.score}
-            level={gameState.level}
-            lines={gameState.lines}
+            score={score}
+            level={level}
+            lines={lines}
           />
         </div>
 
         <GameBoard
-          board={gameState.board}
-          currentTetrimino={gameState.currentTetrimino}
-          currentPosition={gameState.currentPosition}
+          board={board}
+          currentTetrimino={currentTetrimino}
+          currentPosition={currentPosition}
           clearingLines={clearingLines}
         />
 
         <div className={styles.sidePanel}>
           <ControlPanel
-            gameStatus={gameState.status}
+            gameStatus={status}
             onStart={handleStart}
             onPause={pauseGame}
             onResume={resumeGame}
@@ -379,10 +358,10 @@ export function Game() {
       </div>
 
       <GameOverScreen
-        isGameOver={gameState.status === 'gameOver'}
-        score={gameState.score}
-        level={gameState.level}
-        lines={gameState.lines}
+        isGameOver={status === 'gameOver'}
+        score={score}
+        level={level}
+        lines={lines}
         onNewGame={handleStart}
       />
     </div>

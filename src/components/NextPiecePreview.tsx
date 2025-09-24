@@ -7,6 +7,8 @@ interface NextPiecePreviewProps {
 }
 
 const PREVIEW_SIZE = 4;
+const ROW_IDS = ['row-0', 'row-1', 'row-2', 'row-3'];
+const COL_IDS = ['col-0', 'col-1', 'col-2', 'col-3'];
 
 export const NextPiecePreview = React.memo(function NextPiecePreview({
   nextTetrimino,
@@ -46,10 +48,10 @@ export const NextPiecePreview = React.memo(function NextPiecePreview({
     <div className={styles.container}>
       <div className={styles.label}>Next</div>
       <div className={`${styles.nextPiecePreview} nextPiecePreview`}>
-        {Array.from({ length: PREVIEW_SIZE }).map((_, row) => (
-          <div key={row} className={`${styles.row} row`}>
-            {Array.from({ length: PREVIEW_SIZE }).map((_, col) => {
-              const cellState = getCellState(row, col);
+        {ROW_IDS.map((rowId, rowIndex) => (
+          <div key={rowId} className={`${styles.row} row`}>
+            {COL_IDS.map((colId, colIndex) => {
+              const cellState = getCellState(rowIndex, colIndex);
               const classNames = [
                 styles.cell,
                 'cell',
@@ -61,11 +63,11 @@ export const NextPiecePreview = React.memo(function NextPiecePreview({
 
               return (
                 <div
-                  key={col}
+                  key={`${rowId}-${colId}`}
                   className={classNames}
                   style={{
                     backgroundColor: cellState.filled
-                      ? cellState.color || undefined
+                      ? cellState.color ?? undefined
                       : undefined,
                   }}
                 />

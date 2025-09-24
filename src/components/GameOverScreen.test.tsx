@@ -10,7 +10,7 @@ describe('GameOverScreen', () => {
         score={1000}
         level={5}
         lines={42}
-        onNewGame={() => {}}
+        onNewGame={vi.fn()}
       />,
     );
 
@@ -21,11 +21,11 @@ describe('GameOverScreen', () => {
   it('should render overlay when game is over', () => {
     const { container } = render(
       <GameOverScreen
-        isGameOver={true}
+        isGameOver
         score={1000}
         level={5}
         lines={42}
-        onNewGame={() => {}}
+        onNewGame={vi.fn()}
       />,
     );
 
@@ -36,11 +36,11 @@ describe('GameOverScreen', () => {
   it('should display game over message', () => {
     render(
       <GameOverScreen
-        isGameOver={true}
+        isGameOver
         score={1000}
         level={5}
         lines={42}
-        onNewGame={() => {}}
+        onNewGame={vi.fn()}
       />,
     );
 
@@ -50,11 +50,11 @@ describe('GameOverScreen', () => {
   it('should display final score', () => {
     render(
       <GameOverScreen
-        isGameOver={true}
+        isGameOver
         score={12345}
         level={5}
         lines={42}
-        onNewGame={() => {}}
+        onNewGame={vi.fn()}
       />,
     );
 
@@ -65,11 +65,11 @@ describe('GameOverScreen', () => {
   it('should display level reached', () => {
     render(
       <GameOverScreen
-        isGameOver={true}
+        isGameOver
         score={1000}
         level={7}
         lines={42}
-        onNewGame={() => {}}
+        onNewGame={vi.fn()}
       />,
     );
 
@@ -80,11 +80,11 @@ describe('GameOverScreen', () => {
   it('should display lines cleared', () => {
     render(
       <GameOverScreen
-        isGameOver={true}
+        isGameOver
         score={1000}
         level={5}
         lines={123}
-        onNewGame={() => {}}
+        onNewGame={vi.fn()}
       />,
     );
 
@@ -95,11 +95,11 @@ describe('GameOverScreen', () => {
   it('should show new game button', () => {
     render(
       <GameOverScreen
-        isGameOver={true}
+        isGameOver
         score={1000}
         level={5}
         lines={42}
-        onNewGame={() => {}}
+        onNewGame={vi.fn()}
       />,
     );
 
@@ -110,7 +110,7 @@ describe('GameOverScreen', () => {
     const onNewGame = vi.fn();
     render(
       <GameOverScreen
-        isGameOver={true}
+        isGameOver
         score={1000}
         level={5}
         lines={42}
@@ -125,11 +125,11 @@ describe('GameOverScreen', () => {
   it('should format large scores with commas', () => {
     render(
       <GameOverScreen
-        isGameOver={true}
+        isGameOver
         score={1234567}
         level={10}
         lines={200}
-        onNewGame={() => {}}
+        onNewGame={vi.fn()}
       />,
     );
 
@@ -139,11 +139,11 @@ describe('GameOverScreen', () => {
   it('should have dark overlay background', () => {
     const { container } = render(
       <GameOverScreen
-        isGameOver={true}
+        isGameOver
         score={1000}
         level={5}
         lines={42}
-        onNewGame={() => {}}
+        onNewGame={vi.fn()}
       />,
     );
 
@@ -155,11 +155,11 @@ describe('GameOverScreen', () => {
   it('should center content in overlay', () => {
     const { container } = render(
       <GameOverScreen
-        isGameOver={true}
+        isGameOver
         score={1000}
         level={5}
         lines={42}
-        onNewGame={() => {}}
+        onNewGame={vi.fn()}
       />,
     );
 

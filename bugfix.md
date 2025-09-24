@@ -90,3 +90,18 @@
 **確認方法**:
 - `npm run build`
 
+## 2025-09-24 13:55 Lintエラー: npm run buildで@typescript-eslintエラーを解消
+
+**ブランチ**: main
+**カテゴリ**: Lintエラー
+**修正前の症状**:
+- npm run build 時に@typescript-eslint/restrict-template-expressionsおよび@typescript-eslint/prefer-nullish-coalescingのエラーが発生
+
+**修正内容**:
+- src/components/GameBoard.tsx:16,91 - rowIndexやcolIndexをString()でラップしテンプレートリテラルを安全に文字列化
+- src/components/ScorePanel.tsx:45 - progressPercentageをString()でラップ
+- src/services/tetriminoGenerator.ts:56 - nullish coalescing代入(??=)を使用
+
+**確認方法**:
+- npm run build を実行しエラーが発生しないことを確認
+

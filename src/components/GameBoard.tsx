@@ -4,6 +4,18 @@ import { BOARD_WIDTH, BOARD_HEIGHT } from '@/types/board';
 import type { Tetrimino } from '@/types/tetrimino';
 import styles from './GameBoard.module.css';
 
+const DEFAULT_CLEARING_LINES: number[] = [];
+
+const createRowKey = (rowIndex: number, rowCells: Board[number]) => {
+  const cellSignature = rowCells
+    .map((cell, colIndex) => {
+      const state = cell.filled ? cell.color ?? 'filled' : 'empty';
+      return `${String(colIndex)}-${state}`;
+    })
+    .join('|');
+  return `row-${String(rowIndex)}-${cellSignature}`;
+};
+
 interface GameBoardProps {
   board: Board;
   currentTetrimino?: Tetrimino | null;
@@ -15,7 +27,7 @@ export const GameBoard = React.memo(function GameBoard({
   board,
   currentTetrimino,
   currentPosition,
-  clearingLines = [],
+  clearingLines = DEFAULT_CLEARING_LINES,
 }: GameBoardProps) {
   // Determine if a cell should be filled
   const getCellState = (row: number, col: number) => {
@@ -47,17 +59,23 @@ export const GameBoard = React.memo(function GameBoard({
     };
   };
 
+  const clearingLinesSet = React.useMemo(
+    () => new Set(clearingLines),
+    [clearingLines],
+  );
+
   return (
     <div className={styles.gameBoard}>
-      {Array.from({ length: BOARD_HEIGHT }).map((_, row) => {
-        const isClearing = clearingLines.includes(row);
+      {board.slice(0, BOARD_HEIGHT).map((boardRow, rowIndex) => {
+        const rowKey = createRowKey(rowIndex, boardRow);
+        const isClearing = clearingLinesSet.has(rowIndex);
         return (
           <div
-            key={row}
+            key={rowKey}
             className={`${styles.row} row ${isClearing ? styles.clearing : ''}`}
           >
-            {Array.from({ length: BOARD_WIDTH }).map((_, col) => {
-              const cellState = getCellState(row, col);
+            {boardRow.slice(0, BOARD_WIDTH).map((_, colIndex) => {
+              const cellState = getCellState(rowIndex, colIndex);
               const classNames = [
                 styles.cell,
                 'cell',
@@ -70,13 +88,15 @@ export const GameBoard = React.memo(function GameBoard({
                 .filter(Boolean)
                 .join(' ');
 
+              const cellKey = `${rowKey}-col-${String(colIndex)}`;
+
               return (
                 <div
-                  key={col}
+                  key={cellKey}
                   className={classNames}
                   style={{
                     backgroundColor: cellState.filled
-                      ? cellState.color || undefined
+                      ? cellState.color ?? undefined
                       : undefined,
                   }}
                 />

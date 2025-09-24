@@ -30,7 +30,9 @@ describe('useKeyboardInput', () => {
   });
 
   it('should register event listeners on mount', () => {
-    renderHook(() => { useKeyboardInput(); });
+    renderHook(() => {
+      useKeyboardInput();
+    });
 
     expect(window.addEventListener).toHaveBeenCalledWith(
       'keydown',
@@ -43,7 +45,9 @@ describe('useKeyboardInput', () => {
   });
 
   it('should remove event listeners on unmount', () => {
-    const { unmount } = renderHook(() => { useKeyboardInput(); });
+    const { unmount } = renderHook(() => {
+      useKeyboardInput();
+    });
 
     unmount();
 

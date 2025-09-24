@@ -39,7 +39,7 @@ export function createRandomGenerator(seed?: number): TetriminoGenerator {
 
   const generateTetrimino = (): Tetrimino => {
     const index = Math.floor(random.next() * types.length);
-    return TETRIMINOS[types[index]];
+    return { ...TETRIMINOS[types[index]] };
   };
 
   return {
@@ -53,9 +53,7 @@ export function createRandomGenerator(seed?: number): TetriminoGenerator {
     },
 
     peek(): Tetrimino {
-      if (!nextTetrimino) {
-        nextTetrimino = generateTetrimino();
-      }
+      nextTetrimino ??= generateTetrimino();
       return { ...nextTetrimino };
     },
   };
