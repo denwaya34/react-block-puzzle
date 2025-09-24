@@ -5,7 +5,7 @@ import {
   tryRotateWithKick,
 } from "./movementController";
 import { createEmptyBoard, BOARD_WIDTH, BOARD_HEIGHT } from "@/types/board";
-import { TETRIMINOS } from "@/types/tetrimino";
+import { Tetrimino, TETRIMINOS } from "@/types/tetrimino";
 
 describe("MovementController", () => {
   describe("tryMove", () => {
@@ -74,12 +74,12 @@ describe("MovementController", () => {
     it("should find valid position using wall kick offsets", () => {
       const board = createEmptyBoard();
       const tetrimino = TETRIMINOS.T;
-      const rotatedTetrimino = {
+      const rotatedTetrimino: Tetrimino = {
         ...tetrimino,
         shape: [
-          [false, true, false],
-          [true, true, false],
-          [false, true, false],
+          [0, 1, 0],
+          [1, 1, 0],
+          [0, 1, 0],
         ],
       };
       const position = { x: 8, y: 10 }; // Near right wall

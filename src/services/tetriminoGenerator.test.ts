@@ -1,11 +1,11 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect } from "vitest";
 import {
   createRandomGenerator,
   getInitialPosition,
   placeTetriminoOnBoard,
   shouldLockTetrimino,
 } from "./tetriminoGenerator";
-import { createEmptyBoard, BOARD_WIDTH } from "@/types/board";
+import { createEmptyBoard } from "@/types/board";
 import { TETRIMINOS } from "@/types/tetrimino";
 
 describe("TetriminoGenerator", () => {

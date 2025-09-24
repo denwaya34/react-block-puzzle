@@ -1,5 +1,29 @@
 # バグ修正履歴
 
+## 2025-09-24 14:20 ビルドエラー: テストコードの型エラー是正
+
+**ブランチ**: main
+**カテゴリ**: ビルドエラー
+**修正前の症状**:
+- `npm run build` 実行時に `noUnusedLocals` や `Property 'style' does not exist on type 'Element'` などのTypeScriptエラーがテストコードで発生しビルドが停止
+
+**修正内容**:
+- src/components/ControlPanel.test.tsx:153 - 未使用の `container` 取得を削除
+- src/components/GameBoard.test.tsx:12-85 - `querySelectorAll` の戻り値を `HTMLElement` 型に指定し `style` アクセス時の型エラーを解消
+- src/hooks/useGameState.test.ts:5 - 未使用の `TETRIMINOS` インポートを削除
+- src/services/collisionDetector.test.ts:10-112 - 未使用の `Board` 型と不要な `position` 変数を削除
+- src/services/movementController.test.ts:9-96 - `Tetrimino` 型に適合する数値配列へ修正して型不整合を解消
+- src/services/tetriminoGenerator.test.ts:1-8 - 未使用の `vi`, `beforeEach`, `BOARD_WIDTH` を削除
+- src/types/board.test.ts:1-12 - 未使用の `Board` インポートを削除
+
+**修正前のコード → 修正後のコード**:
+- `const { container, rerender } = render(` → `const { rerender } = render(`
+- `container.querySelectorAll(".row")` → `container.querySelectorAll<HTMLElement>(".row")`
+- `shape: [[false, true, false], ...]` → `shape: [[0, 1, 0], ...]`
+
+**確認方法**:
+- `npm run build`
+
 ## 2025-09-24 00:00 ビルドエラー: Game.tsxのシンタックスミス修正
 
 **ブランチ**: team-d

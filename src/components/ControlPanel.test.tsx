@@ -150,7 +150,7 @@ describe("ControlPanel", () => {
   });
 
   it("should display game status indicator", () => {
-    const { container, rerender } = render(
+    const { rerender } = render(
       <ControlPanel
         gameStatus="playing"
         onStart={() => {}}

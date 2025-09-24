@@ -8,7 +8,6 @@ import {
 } from "./collisionDetector";
 import {
   createEmptyBoard,
-  Board,
   BOARD_WIDTH,
   BOARD_HEIGHT,
 } from "@/types/board";
@@ -107,7 +106,6 @@ describe("CollisionDetector", () => {
     it("should detect collision with bottom", () => {
       const board = createEmptyBoard();
       const tetrimino = TETRIMINOS.T;
-      const position = { x: 5, y: BOARD_HEIGHT - 2 };
       const nextPosition = { x: 5, y: BOARD_HEIGHT - 1 };
 
       expect(willCollide(board, tetrimino, nextPosition)).toBe(true);

@@ -1,12 +1,5 @@
 import { describe, it, expect } from "vitest";
-import {
-  Cell,
-  Board,
-  Position,
-  createEmptyBoard,
-  BOARD_WIDTH,
-  BOARD_HEIGHT,
-} from "./board";
+import { Cell, Position, createEmptyBoard, BOARD_WIDTH, BOARD_HEIGHT } from "./board";
 
 describe("Board Types", () => {
   it("should define board dimensions correctly", () => {

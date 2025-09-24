@@ -2,7 +2,6 @@ import { describe, it, expect } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import { useGameState } from "./useGameState";
 import { createEmptyBoard } from "@/types/board";
-import { TETRIMINOS } from "@/types/tetrimino";
 
 describe("useGameState", () => {
   it("should initialize with idle state", () => {
