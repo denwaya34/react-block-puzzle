@@ -5,6 +5,12 @@
       "env": {},
       "args": []
     },
+    "sequential-thinking": {
+      "command": "bunx",
+      "args": [
+        "@modelcontextprotocol/server-sequential-thinking"
+      ]
+    },
     "Context7": {
       "url": "https://mcp.context7.com/mcp",
       "headers": {}
