@@ -12,8 +12,8 @@
       ]
     },
     "Context7": {
-      "url": "https://mcp.context7.com/mcp",
-      "headers": {}
+      "command": "bunx",
+      "args": ["@upstash/context7-mcp"]
     },
     "codex": {
       "type": "stdio",
