@@ -1,0 +1,150 @@
+.controlPanel {
+  background-color: #1a1a1a;
+  border: 2px solid #333;
+  border-radius: 8px;
+  padding: 16px;
+  min-width: 200px;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: #222;
+}
+
+.statusIndicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.statusIdle .statusIndicator,
+.statusIndicator.statusIdle {
+  background-color: #666;
+  animation: none;
+}
+
+.statusPlaying .statusIndicator,
+.statusIndicator.statusPlaying {
+  background-color: #4caf50;
+}
+
+.statusPaused .statusIndicator,
+.statusIndicator.statusPaused {
+  background-color: #ff9800;
+  animation: none;
+}
+
+.statusGameOver .statusIndicator,
+.statusIndicator.statusGameOver {
+  background-color: #f44336;
+  animation: none;
+}
+
+.statusText {
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.button {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+.primaryButton {
+  background-color: #4caf50;
+  color: white;
+}
+
+.primaryButton:hover {
+  background-color: #5cbf60;
+}
+
+.pauseButton {
+  background-color: #ff9800;
+  color: white;
+}
+
+.pauseButton:hover {
+  background-color: #ffa726;
+}
+
+.resetButton {
+  background-color: #666;
+  color: white;
+}
+
+.resetButton:hover {
+  background-color: #777;
+}
+
+.shortcuts {
+  border-top: 1px solid #333;
+  padding-top: 12px;
+}
+
+.shortcutItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+
+.key {
+  display: inline-block;
+  min-width: 45px;
+  padding: 2px 6px;
+  background-color: #333;
+  border: 1px solid #444;
+  border-radius: 3px;
+  color: #fff;
+  font-family: monospace;
+  font-size: 11px;
+  text-align: center;
+}
+
+.keyLabel {
+  color: #888;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

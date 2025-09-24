@@ -1,0 +1,60 @@
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  font-family: "Courier New", monospace;
+}
+
+.mainArea {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.sidePanel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 200px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .mainArea {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .sidePanel {
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .game {
+    padding: 10px;
+  }
+}
+
+/* Animation for game start */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mainArea {
+  animation: fadeIn 0.5s ease-out;
+}

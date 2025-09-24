@@ -1,0 +1,9 @@
+[tools]
+node = "lts"
+pnpm = "10.16.1"
+
+[env]
+NODE_ENV = "development"
+
+[settings]
+legacy_version_file = true

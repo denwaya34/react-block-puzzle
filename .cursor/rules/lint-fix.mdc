@@ -1,0 +1,151 @@
+---
+alwaysApply: false
+description: Lintエラー修正
+---
+
+# Lintエラー修正ルール
+
+Lintエラーを体系的に修正し、学習のために記録します。
+
+## 実行手順
+
+### 1. Lintエラーの確認
+```bash
+pnpm lint
+```
+
+### 2. 自動修正を試行
+```bash
+pnpm lint --fix
+```
+
+### 3. 手動修正が必要な場合
+
+#### 未使用変数エラー (@typescript-eslint/no-unused-vars)
+- 変数が本当に未使用か確認
+- 使用されている場合は、依存配列などへの追加を検討
+- 本当に未使用なら削除
+
+#### any型の使用 (@typescript-eslint/no-explicit-any)
+- 適切な型を定義
+- 型が不明な場合は`unknown`を使用
+- 必要に応じて型ガードを実装
+
+#### == vs === (@typescript-eslint/eqeqeq)
+- `==` を `===` に変更
+- `!=` を `!==` に変更
+- 型変換が必要な場合は明示的に行う
+
+#### React Hook依存配列 (react-hooks/exhaustive-deps)
+- useEffect, useCallback, useMemoの依存配列を確認
+- 必要な依存を追加
+- 不要な依存を削除
+
+#### import文の順序 (import/order)
+- React関連
+- 外部ライブラリ
+- 内部モジュール（@/で始まる）
+- 相対パス
+- スタイル
+
+### 4. 修正の記録
+
+bugfix.mdに以下の形式で記録：
+
+```markdown
+## [日時] Lintエラー: [エラールール名]
+
+**ブランチ**: team-x
+**カテゴリ**: Lintエラー
+**修正前の症状**:
+- ESLint: [具体的なエラーメッセージ]
+- ファイル: [ファイルパス]:[行番号]
+
+**修正内容**:
+- [ファイル名]:[行番号] - [修正内容]
+- `修正前のコード`
+- → `修正後のコード`
+
+**確認方法**:
+- `pnpm lint` でエラーが解消されることを確認
+```
+
+## 一般的なLintエラーと修正方法
+
+### 1. 未使用変数
+```typescript
+// 修正前
+const dropSpeed = 50; // 未使用
+
+// 修正後
+// 削除するか、使用する
+```
+
+### 2. any型
+```typescript
+// 修正前
+const handleEvent = (e: any) => {
+
+// 修正後
+const handleEvent = (e: KeyboardEvent) => {
+```
+
+### 3. 厳密等価演算子
+```javascript
+// 修正前
+if (value == null) {
+
+// 修正後
+if (value === null || value === undefined) {
+```
+
+### 4. Hook依存配列
+```typescript
+// 修正前
+useEffect(() => {
+  doSomething(value);
+}, []); // valueが依存配列にない
+
+// 修正後
+useEffect(() => {
+  doSomething(value);
+}, [value]);
+```
+
+### 5. import順序
+```typescript
+// 修正前
+import styles from './Game.module.css';
+import React from 'react';
+import { GameBoard } from '@/components';
+
+// 修正後
+import React from 'react';
+import { GameBoard } from '@/components';
+import styles from './Game.module.css';
+```
+
+## 確認コマンド
+
+```bash
+# Lintエラーを確認
+pnpm lint
+
+# 特定のファイルだけチェック
+pnpm lint src/Game.tsx
+
+# 自動修正
+pnpm lint --fix
+
+# 自動修正できないエラーのみ表示
+pnpm lint --fix-dry-run
+```
+
+## チェックリスト
+
+- [ ] `pnpm lint`でエラーを確認
+- [ ] 可能な限り自動修正を適用
+- [ ] 手動で残りのエラーを修正
+- [ ] 修正内容をbugfix.mdに記録
+- [ ] 修正後に`pnpm lint`で確認
+- [ ] アプリケーションの動作確認
