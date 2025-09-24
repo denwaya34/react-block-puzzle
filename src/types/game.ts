@@ -1,5 +1,7 @@
-import { Board, Position, createEmptyBoard } from './board';
-import { Tetrimino, TetriminoType, TETRIMINOS } from './tetrimino';
+import { createEmptyBoard } from './board';
+import type { Board, Position } from './board';
+import { TETRIMINOS } from './tetrimino';
+import type { Tetrimino, TetriminoType } from './tetrimino';
 
 export type GameStatus = 'idle' | 'playing' | 'paused' | 'gameOver';
 

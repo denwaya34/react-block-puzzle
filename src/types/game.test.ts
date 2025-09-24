@@ -1,11 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import {
-  GameStatus,
-  GameState,
-  GameMetrics,
-  createInitialGameState,
-  getDropInterval,
-} from './game';
+import { createInitialGameState, getDropInterval } from './game';
+import type { GameMetrics, GameState, GameStatus } from './game';
 
 describe('Game State', () => {
   it('should create initial game state', () => {

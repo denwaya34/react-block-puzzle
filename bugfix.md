@@ -49,3 +49,25 @@
 **確認方法**:
 - `npm run build`
 
+## 2025-09-24 12:52 ビルドエラー: type-only import未使用によるTS1484解消
+
+**ブランチ**: main
+**カテゴリ**: ビルドエラー
+**修正前の症状**:
+- `npm run build` 実行時に `TS1484: '...'' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled` が複数ファイルで発生しビルドが停止
+
+**修正内容**:
+- src/components/ControlPanel.tsx:1 - `GameStatus` のインポートを type-only import に変更
+- src/hooks/useGameState.ts:4 - `GameState`, `GameStatus` のインポートを type-only import に変更
+- src/types/game.ts:1-2 - 型と値のインポートを分離し、型は type-only import へ変更
+- src/types/board.test.ts:2 - `Cell`, `Position` を type-only import で読み込みに変更
+- src/types/game.test.ts:2-8 - `GameStatus` などの型を type-only import に変更
+
+**修正前のコード → 修正後のコード**:
+- `import { GameStatus } from '@/types/game';` → `import type { GameStatus } from '@/types/game';`
+- `import { GameState, GameStatus } from '@/types/game';` → `import type { GameState, GameStatus } from '@/types/game';`
+- `import { Board, Position, createEmptyBoard } from './board';` → `import { createEmptyBoard } from './board';` / `import type { Board, Position } from './board';`
+
+**確認方法**:
+- `npm run build`
+

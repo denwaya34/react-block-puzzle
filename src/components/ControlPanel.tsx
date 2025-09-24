@@ -1,4 +1,4 @@
-import { GameStatus } from '@/types/game';
+import type { GameStatus } from '@/types/game';
 import styles from './ControlPanel.module.css';
 
 interface ControlPanelProps {
